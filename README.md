@@ -246,4 +246,70 @@ Coseine Similarity dilakukan untuk...
 ![image](https://github.com/user-attachments/assets/65a68e59-852c-4181-8fee-fcac0f7ab149)
 
 
+### 3. Mendapatkan rekomendasi
+Untuk mendapatkan rekomendasi berbasis konten, maka perlu membuat fungsi terlebih dahulu, berikut adalah:
+
+def food_recommendations(nama_makanan, similarity_data=cosine_sim_df, items=food[['Name', 'C_Type']], k=5):
+
+index = similarity_data.loc[:,nama_makanan].to_numpy().argpartition(
+        range(-1, -k, -1))
+
+ closest = similarity_data.columns[index[-1:-(k+2):-1]]
+
+closest = closest.drop(nama_makanan, errors='ignore')
+
+return pd.DataFrame(closest).merge(items).head(k)
+
+
+Keterangan:
+Fungsi ini bertujuan untuk memberikan rekomendasi restoran berdasarkan kemiripan dengan restoran yang diberikan.
+
+Parameter:
+nama_makanan: Tipe data string (str). Nama restoran yang akan dijadikan acuan untuk mencari kemiripan.
+
+similarity_data: Tipe data pd.DataFrame. Dataframe yang berisi nilai kemiripan antar restoran, simetrik dengan restoran sebagai indeks dan kolom.
+items: Tipe data pd.DataFrame. Dataframe yang berisi nama restoran dan fitur lainnya yang digunakan untuk mendefinisikan kemiripan.
+k: Tipe data integer (int). Jumlah rekomendasi yang akan diberikan.
+
+Langkah-langkah dalam fungsi:
+1. Mengambil indeks restoran dengan kemiripan tertinggi:
+- Menggunakan argpartition untuk melakukan partisi secara tidak langsung sepanjang sumbu yang diberikan. Dataframe diubah menjadi numpy array untuk mempermudah proses ini.
+- range(-1, -k, -1) digunakan untuk mengambil k nilai terbesar dari kemiripan.
+
+2. Mengambil nama restoran dengan kemiripan tertinggi:
+- Menggunakan indeks yang diperoleh dari langkah sebelumnya untuk mendapatkan nama restoran dengan kemiripan tertinggi.
+- index[-1:-(k+2):-1] digunakan untuk mengurutkan dan mengambil k nilai terbesar.
+
+3. Menghapus nama restoran yang dicari dari daftar rekomendasi:
+- Menggunakan drop untuk memastikan restoran yang dicari tidak muncul dalam daftar rekomendasi.
+
+4. Menggabungkan hasil dengan dataframe items:
+- Menggunakan merge untuk menggabungkan hasil rekomendasi dengan dataframe items agar informasi tambahan tentang restoran juga disertakan.
+- Menggunakan head(k) untuk memastikan hanya k rekomendasi yang diberikan.
+
+
+Pada akhirnya kita akan menjalankan fungsi tersebut. 
+Pertama kita akan mencoba melihat data. Sebagai contoh kita mengambil data dengan nama makanan chrismas cake dengan kode:
+
+food[food.Name.eq('christmas cake')]
+
+hasilnya adalah:
+
+![image](https://github.com/user-attachments/assets/b26bb49b-5520-4abe-8b71-24a55b1df05f)
+
+Kedua kita akan meminta rekomendasi makanan yang mirip dengan chrismas cake dengan kode:
+
+food_recommendations('christmas cake')
+
+![image](https://github.com/user-attachments/assets/ca170395-82d6-4c84-b815-1c83a483a210)
+
+Hasilnya adalah makanan yang mirip dengan chrismas cake adalah: 
+1. chocolate kaju katli	
+2. eggless vanilla cake	
+3. sweet potato pie	
+4. eggless coffee cupcakes	
+5. plum cake	
+
+Semua rekomendasi tersebut adalah masuk dalam kategori dessert yang sama dengan yang kategori chrismas cake
+
 
