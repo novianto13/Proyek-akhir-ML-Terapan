@@ -49,9 +49,12 @@ Dapat menemukan rekomendasi "non-tradisional" (makanan yang berbeda dari kebiasa
 
 # Data Understanding
 Untuk mencapai tujuannya, sistem rekomendasi ini dibuat dengan menggunakan data yang diambil dari https://www.kaggle.com/datasets/schemersays/food-recommendation-system. Data ini berisi dua data, yaitu makanan dan rating. Berikut ini data makana (food):
+
 ![image](https://github.com/user-attachments/assets/0a245946-19a5-48f2-887f-be0a439a9580)
 
+
 Dengan rincian kolom atau variabel adalah sebagai berikut:
+
 ![image](https://github.com/user-attachments/assets/22aeddad-a1d4-417b-a27a-274e034842fb)
 
 Terdapat 5 kolom atau variabel dalam data makanan. yaitu
@@ -62,9 +65,12 @@ Terdapat 5 kolom atau variabel dalam data makanan. yaitu
 5. Describe. Data ini berisi penjelasan rici komposisi makanan atau masakan.
 
 Data rating adalah seperti berikut:
+
 ![image](https://github.com/user-attachments/assets/73437fda-0f8c-4fbc-9dd6-192a7ffa381e)
 
+
 Data rating meliputi berikut ini
+
 ![image](https://github.com/user-attachments/assets/67ba40ec-9b6d-46dc-a487-2eaf676e48be)
 
 Terdapat tiga variabel pada dataset ini, yaitu:
@@ -79,5 +85,6 @@ Dari data makanan yang akan ada dapat ditampilakn makanan berdasarkan jenis kate
 
 Hasil visualisasi data makanan berdasarkan jenis makanan, dapat dipahami bahwa jumlah makanan tertinggi dalam dataset adalah jenis makanan Indian (India). Sedangkan jumlah makanan yang yang terendah adalah jenis makanan korea dan spanyol. 
 Berikut adalah rincian datanya:
+
 ![image](https://github.com/user-attachments/assets/d316499f-56a3-4850-b416-60396aad2773)
 
