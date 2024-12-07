@@ -213,6 +213,8 @@ b. membuat fit tfidf matrix
 
 ![image](https://github.com/user-attachments/assets/55938435-b731-480c-9584-f85385e3a768)
 
+Keterangan:
+
 fit: Mempelajari kosakata dan bobot IDF (Inverse Document Frequency) dari kolom 'C_Type' pada food DataFrame. Kolom ini kemungkinan berisi informasi tentang jenis masakan untuk setiap item makanan.
 
 transform: Mengonversi jenis masakan menjadi representasi numerik yang disebut matriks TF-IDF, di mana setiap baris mewakili item makanan dan setiap kolom mewakili kata unik dalam jenis masakan. Nilai dalam matriks mewakili skor TF-IDF, yang menunjukkan pentingnya setiap kata dalam jenis masakan setiap item makanan.
@@ -221,10 +223,9 @@ transform: Mengonversi jenis masakan menjadi representasi numerik yang disebut m
 
 Untuk dapat melihat matriks dalam data frame yang lebih jelas maka matriks dapat ditampilakn dalam tampilan berikut ini:
 
-![image](https://github.com/user-attachments/assets/8b7ea8b0-2f54-4cf7-b671-180078602ba1)
-
 ![image](https://github.com/user-attachments/assets/c2d646a1-99f7-4154-86c7-d9b3c178e1b4)
 
+Katerangan:
 
 pd.DataFrame(): Ini adalah fungsi dari pustaka pandas yang digunakan untuk membuat DataFrame, yang seperti tabel dalam Python.
 
@@ -232,5 +233,17 @@ tfidf_matrix.todense(): Ini mengonversi matriks TF-IDF (yang disimpan dalam form
 columns=tf.get_feature_names_out(): Ini menetapkan nama fitur (jenis masakan) yang diekstrak oleh TfidfVectorizer sebagai tajuk kolom DataFrame.
 
 index=food.Name: Ini menetapkan nama item makanan sebagai label baris (indeks) DataFrame
+
+Hasil matrik tersebut menunjukan adanya nilai 1 antar dua data, angka tersebut menunjukkan bahwa kaitan jenis makanan dan nama makannya.
+
+### 2. Cosine similarity
+
+Coseine Similarity dilakukan untuk...
+
+![image](https://github.com/user-attachments/assets/c8397199-c7a5-41ee-970c-58d2b6318538)
+
+
+![image](https://github.com/user-attachments/assets/65a68e59-852c-4181-8fee-fcac0f7ab149)
+
 
 
