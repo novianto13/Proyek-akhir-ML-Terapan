@@ -135,7 +135,7 @@ Gambar tersebut diperoleh dari tabel berikut ini:
 ![image](https://github.com/user-attachments/assets/affcd1cb-d358-4f8c-8e8d-aba80c260b46)
 
 Dari rating jemis makan tersebut dapat dimaknai sebagai berikut:
-1. Total konsumen yang memberikan review ada 511 orang.
+1. Total konsumen yang memberikan review ada 511 konsumen yang memberikan rating (dari total data 602).
 2. Konsumen yang memberikan review 3 terbanyak adalah rating 3 (63 konsumen), kemudian rating 5 dan rating 10 yang masing-masing 61 konsumen. Kondisi ini menunjukkan orang 
 3. Banyaknya makanan yang review adalah makanan indian, dan sekaligus makanan yang mendapatkan jumlah rating 10 terbanyak dibandingkan makanan lainnya, yaitu 14 konsumen dari 61 konsumen yang memberikan rating 10. Sekaligus jenis makanan yang paling banyak mendapatkan nilai terendah dari konsumen, yaitu 12 konsumen dari total 48 konnsumen yang memberikan nilai rating 1.
 
@@ -176,6 +176,61 @@ Cek data kosong hasilnya adalah
 
 Dari informasi tersebut maka dapat dimaknai bahwa dapat tidak ada data kosong, namun data yang kosong sudah terisi dengan NAN sebanyak 91. 
 
+Data yang kosong atau NAN  dihapus dengan kode berikut:
 
+![image](https://github.com/user-attachments/assets/e4377a1a-749e-4ded-b671-09e6518a1fac)
+
+Setelah data NAN dihapus, maka terdapat 511 data yang bisa diolah.
+
+2. Cek data duplikat:
+
+food_rating.duplicated().sum()
+
+Hasilnya duplikasi data adalah 0. Hal ini, menunjukkan tidak ada data yang duplikat.
+
+# Modeling
+## Content Based Filtering
+
+Model pertama yang dibuat untuk sistem rekomendasi adalah membuat model dengan pendekatan Content Based Filtering. Pembuatan model ini dilakukan dengan tahapan:
+1. Vektorisasi: TF-IDF Vectorizer
+2. Cosine Similarity
+3. Membuat rekomendasi
+
+### 1. Vektorisasi: TF-IDF Vectorizer
+
+a. Vektorisasi dilakukan berdasarkan jenis makanan dari data C_Type. 
+
+![image](https://github.com/user-attachments/assets/02e59832-b0e3-430e-8996-99d9a1e4b9f9)
+
+Berikut penjelasan singkatnya:
+
+Membuat vektor TF IDF: tf = TfidfVectorizer(): Baris ini membuat instance TfidfVectorizer dan menetapkannya ke variabel tf. Anggap saja ini seperti menyiapkan mesin untuk memproses data teks.
+
+
+Fiting vectorizer adalah dengan kode: tf.fit(food['C_Type']): Baris ini adalah tempat mesin (TfidfVectorizer) mempelajari kosakata kolom 'C_Type' dalam kerangka data makanan. C_Type kemungkinan merujuk pada jenis masakan makanan. Langkah ini penting karena membantu model memahami pentingnya setiap kata dalam konteks masakan yang berbeda.
+
+b. membuat fit tfidf matrix 
+
+![image](https://github.com/user-attachments/assets/55938435-b731-480c-9584-f85385e3a768)
+
+fit: Mempelajari kosakata dan bobot IDF (Inverse Document Frequency) dari kolom 'C_Type' pada food DataFrame. Kolom ini kemungkinan berisi informasi tentang jenis masakan untuk setiap item makanan.
+
+transform: Mengonversi jenis masakan menjadi representasi numerik yang disebut matriks TF-IDF, di mana setiap baris mewakili item makanan dan setiap kolom mewakili kata unik dalam jenis masakan. Nilai dalam matriks mewakili skor TF-IDF, yang menunjukkan pentingnya setiap kata dalam jenis masakan setiap item makanan.
+
+![image](https://github.com/user-attachments/assets/d855731b-45f5-46fd-927d-a3e24638a6ed)
+
+Untuk dapat melihat matriks dalam data frame yang lebih jelas maka matriks dapat ditampilakn dalam tampilan berikut ini:
+
+![image](https://github.com/user-attachments/assets/8b7ea8b0-2f54-4cf7-b671-180078602ba1)
+
+![image](https://github.com/user-attachments/assets/c2d646a1-99f7-4154-86c7-d9b3c178e1b4)
+
+
+pd.DataFrame(): Ini adalah fungsi dari pustaka pandas yang digunakan untuk membuat DataFrame, yang seperti tabel dalam Python.
+
+tfidf_matrix.todense(): Ini mengonversi matriks TF-IDF (yang disimpan dalam format khusus yang hemat memori) menjadi matriks padat dan teratur yang dapat dilihat dengan mudah.
+columns=tf.get_feature_names_out(): Ini menetapkan nama fitur (jenis masakan) yang diekstrak oleh TfidfVectorizer sebagai tajuk kolom DataFrame.
+
+index=food.Name: Ini menetapkan nama item makanan sebagai label baris (indeks) DataFrame
 
 
