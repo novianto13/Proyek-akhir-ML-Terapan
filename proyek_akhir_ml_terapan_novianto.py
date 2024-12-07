@@ -114,7 +114,72 @@ bottom_5_foods = sorted_ratings.tail(5)
 print("5 Nama Makanan dengan Rating Tertinggi:\n", top_5_foods)
 print("\n5 Nama Makanan dengan Rating Terendah:\n", bottom_5_foods)
 
-"""# Data Preparation"""
+# Menghitung jumlah data untuk setiap rating
+rating_counts = food_rating['Rating'].value_counts()
+
+# Menghitung jumlah total data
+total_data = len(food_rating)
+
+# Menampilkan hasil
+print("Jumlah data berdasarkan rating:")
+print(rating_counts)
+print("\nJumlah total data:", total_data)
+
+# Menghitung jumlah data untuk setiap rating
+rating_counts = food_rating['Rating'].value_counts()
+
+# Membuat grafik batang
+plt.bar(rating_counts.index, rating_counts.values)
+
+# Menambahkan label dan judul
+plt.xlabel("Rating")
+plt.ylabel("Jumlah Data")
+plt.title("Jumlah Data Berdasarkan Rating")
+
+# Menampilkan grafik
+plt.show()
+
+# manampilkan tabel rating dan jenis makanan
+
+# Kelompokkan data dan hitung jumlah data
+rating_food_counts = food_rating.groupby(['Rating', 'C_Type']).size().unstack(fill_value=0)
+
+# Hitung total per kolom
+total_per_column = rating_food_counts.sum()
+
+# Buat baris baru untuk total
+total_row = pd.DataFrame(data=[total_per_column.values], columns=total_per_column.index, index=['Total'])
+
+# Gabungkan baris total dengan DataFrame asli
+rating_food_counts = pd.concat([rating_food_counts, total_row])
+
+# Hitung total per baris dan tambahkan kolom 'Jumlah'
+rating_food_counts['Jumlah'] = rating_food_counts.sum(axis=1)
+
+# Tampilkan tabel
+print("Jumlah Data Berdasarkan Rating dan Jenis Makanan:")
+display(rating_food_counts)
+
+# Mengambil data dari tabel rating_food_counts
+rating_food_counts = food_rating.groupby(['Rating', 'C_Type']).size().unstack(fill_value=0)
+
+# Membuat grafik batang bertumpuk
+rating_food_counts.plot(kind='bar', stacked=True, figsize=(10, 6))
+
+# Menambahkan label dan judul
+plt.xlabel("Jenis Makanan (C_Type)")
+plt.ylabel("Jumlah Data")
+plt.title("Jumlah Data Berdasarkan Rating dan Jenis Makanan")
+plt.xticks(rotation=45, ha='right')  # Rotasi label sumbu x agar mudah dibaca
+plt.legend(title='Rating')
+
+# Menampilkan grafik
+plt.show()
+
+"""# Data Preparation
+
+## Cleaning data
+"""
 
 food_rating.duplicated().sum()
 
@@ -233,7 +298,7 @@ def food_recommendations(nama_makanan, similarity_data=cosine_sim_df, items=food
 
     Parameter:
     ---
-    nama_resto : tipe data string (str)
+    nama_food : tipe data string (str)
                 Nama Restoran (index kemiripan dataframe)
     similarity_data : tipe data pd.DataFrame (object)
                       Kesamaan dataframe, simetrik, dengan resto sebagai
