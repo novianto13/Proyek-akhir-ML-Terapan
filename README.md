@@ -416,7 +416,7 @@ Hsilnya adalah
 
 Kode ini membantu dalam mempersiapkan dan memverifikasi data sebelum digunakan dalam analisis atau model pembelajaran mesin. Dengan mengetahui jumlah pengguna dan makanan, serta rentang nilai rating, kita dapat lebih memahami distribusi data yang akan digunakan.
 
-## 2. Validasi
+### 2. Validasi
 
 untuk validasi maka kita akan mengacak data rating:
 
@@ -430,7 +430,7 @@ Cek data validasi
 
 ![image](https://github.com/user-attachments/assets/d1f80203-7c86-4046-b2a8-882e2af96ef9)
 
-## 3. Training data
+### 3. Training data
 
 PAda bagian inim model yang sudah dibuat akan ditrain untuk melihat akurasinya
 
@@ -445,6 +445,25 @@ Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dal
 
 ![image](https://github.com/user-attachments/assets/d857772a-c257-4da4-8397-685c34600fec)
 
+![image](https://github.com/user-attachments/assets/828fb7bd-d2a9-4343-8ac2-ed8c6d98f59c)
 
 
+### 4. Visualisasi matrik
+
+![image](https://github.com/user-attachments/assets/ef270ce7-773d-4dbe-bde9-a88411d626ce)
+
+![image](https://github.com/user-attachments/assets/95bb363b-a5d4-40fd-91a6-9b5965d3616f)
+
+
+
+### 5. Rekomendasi makanan
+
+![image](https://github.com/user-attachments/assets/823b9c4b-fb16-44b2-9cf4-033843576ce9)
+
+![image](https://github.com/user-attachments/assets/54cd1d3d-2e22-4e9b-a23f-d2abaae46859)
+
+![image](https://github.com/user-attachments/assets/21b39659-8078-4532-bcfb-57f69c144e98)
+
+
+# Kesimpulan
 
