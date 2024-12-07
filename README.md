@@ -312,4 +312,139 @@ Hasilnya adalah makanan yang mirip dengan chrismas cake adalah:
 
 Semua rekomendasi tersebut adalah masuk dalam kategori dessert yang sama dengan yang kategori chrismas cake
 
+## Collaborative Filtering
+Untuk melakukan sistem rekomendasi dengan Collaborative Filtering, kita akan mempersiapkan  data rating. Langkah untuk melakukan collaborative filtering adalah
+1. pengembangan model
+2. validasi
+3. training data
+4. visualisasi metrik
+5. rekomendasi makanan
+
+### 1. Pengembangan model
+**1. langkah pertama adalah ini dilakukan dengna membuat kode untuk melakukan encoded pada data rating.** 
+Kodenya adalah sebagai berikut
+
+![image](https://github.com/user-attachments/assets/111d0cbd-aed1-41c1-a9da-1e209abe29b2)
+
+Kode ini bertujuan untuk mengubah User_ID menjadi bentuk yang lebih mudah diproses oleh model pembelajaran mesin, yaitu dengan melakukan encoding pada User_ID. Encoding ini mengubah User_ID menjadi angka unik yang sesuai dengan indeksnya.
+
+Keterangan Kode:
+- Mengubah User_ID menjadi list tanpa nilai yang sama:
+
+user_ids = rating['User_ID'].unique().tolist()
+print('list userID: ', user_ids)
+rating['User_ID'].unique() mengambil semua nilai unik dari kolom User_ID dalam dataframe rating.
+
+.tolist() mengubah array hasil dari unique() menjadi list Python.
+
+print digunakan untuk menampilkan list user_ids.
+
+- Melakukan encoding User_ID:
+
+user_to_user_encoded = {x: i for i, x in enumerate(user_ids)}
+print('encoded userID : ', user_to_user_encoded)
+
+{x: i for i, x in enumerate(user_ids)} adalah dictionary comprehension yang membuat dictionary dengan User_ID sebagai kunci dan indeksnya sebagai nilai.
+
+enumerate(user_ids) memberikan pasangan indeks dan nilai dari user_ids.
+print digunakan untuk menampilkan dictionary user_to_user_encoded.
+
+- Melakukan proses encoding angka ke User_ID:
+
+user_encoded_to_user = {i: x for i, x in enumerate(user_ids)}
+print('encoded angka ke userID: ', user_encoded_to_user)
+
+{i: x for i, x in enumerate(user_ids)} adalah dictionary comprehension yang membuat dictionary dengan indeks sebagai kunci dan User_ID sebagai nilai.
+
+print digunakan untuk menampilkan dictionary user_encoded_to_user.
+
+hasilnya
+
+![image](https://github.com/user-attachments/assets/b2f9e90b-40c7-48e1-b039-235bf0983ed5)
+
+Kode ini membantu dalam proses transformasi User_ID menjadi bentuk yang lebih mudah diproses oleh model pembelajaran mesin dengan melakukan encoding dua arah: dari User_ID ke angka dan sebaliknya. Ini sangat berguna dalam sistem rekomendasi atau model lain yang memerlukan representasi numerik dari data kategorikal.
+
+**2. Mempersiapkan data makanan**
+Kodenya
+
+![image](https://github.com/user-attachments/assets/1ab14d54-96d1-434e-a637-99d1e572798b)
+
+Kode ini bertujuan untuk mengubah Food_ID menjadi bentuk yang lebih mudah diproses oleh model pembelajaran mesin, yaitu dengan melakukan encoding pada Food_ID. Encoding ini mengubah Food_ID menjadi angka unik yang sesuai dengan indeksnya.
+
+Kode ini membantu dalam proses transformasi Food_ID menjadi bentuk yang lebih mudah diproses oleh model pembelajaran mesin dengan melakukan encoding dua arah: dari Food_ID ke angka dan sebaliknya. Ini sangat berguna dalam sistem rekomendasi atau model lain yang memerlukan representasi numerik dari data kategorikal.
+
+**3. Mapping Food_ID dalam dataframe**
+Kodenya
+
+![image](https://github.com/user-attachments/assets/cff6b62b-5491-40c4-bb31-0014ce7a0a11)
+
+Kode ini bertujuan untuk memetakan Food_ID ke dalam dataframe rating menggunakan dictionary food_to_food_encoded, dan kemudian memeriksa apakah ada nilai NaN setelah proses pemetaan.
+
+Kode ini memastikan bahwa setiap Food_ID dalam dataframe rating berhasil dipetakan ke nilai yang telah diencode. Selain itu, kode ini juga memeriksa apakah ada kesalahan dalam proses pemetaan yang menyebabkan nilai NaN.
+
+**4. Cek nilai dari Food_ID yang digunakan dasar mapping rekomendasi**
+Kodenya
+
+![image](https://github.com/user-attachments/assets/b6564677-0893-4355-a3e4-8d022749e589)
+
+Kode ini bertujuan untuk memverifikasi bahwa semua Food_ID dalam dataframe rating telah berhasil dipetakan ke nilai yang telah diencode, serta memastikan tidak ada Food_ID yang tidak termapping.
+
+Kode ini memastikan bahwa semua Food_ID dalam dataframe rating telah berhasil dipetakan ke nilai yang telah diencode dan tidak ada Food_ID yang terlewat. Ini penting untuk memastikan integritas data sebelum digunakan dalam model pembelajaran mesin.
+
+Pada akhirnya maping diseiapkan dengan kode berikut ini. Kode ini bertujuan untuk melakukan encoding pada Food_ID dan memetakan hasil encoding tersebut ke dalam kolom baru food di dataframe rating. 
+
+![image](https://github.com/user-attachments/assets/b6c1e9dc-da40-4dfc-bd1f-99a3989a2e22)
+
+Kode ini memastikan bahwa setiap Food_ID dalam dataframe rating berhasil dipetakan ke nilai yang telah diencode, dan hasilnya disimpan dalam kolom baru food. Ini penting untuk mempersiapkan data sebelum digunakan dalam model pembelajaran mesin atau analisis lebih lanjut.
+
+Mapping juga dilakukan pada data rating dengan kode berikut
+
+![image](https://github.com/user-attachments/assets/a59efc6d-5d16-4fad-a857-f2b4a49ee571)
+
+![image](https://github.com/user-attachments/assets/44401c4c-f452-4b02-870f-6481ec0fa1b9)
+
+Kode ini bertujuan untuk:
+
+1. Mendapatkan jumlah unik pengguna dan makanan.
+2. Mengubah kolom Rating menjadi tipe data float.
+3. Menentukan nilai minimum dan maksimum dari kolom Rating.
+4. Menampilkan informasi tersebut.
+
+Hsilnya adalah 
+
+![image](https://github.com/user-attachments/assets/c5c8ff46-b2f3-458f-a47b-3d54d134bc08)
+
+Kode ini membantu dalam mempersiapkan dan memverifikasi data sebelum digunakan dalam analisis atau model pembelajaran mesin. Dengan mengetahui jumlah pengguna dan makanan, serta rentang nilai rating, kita dapat lebih memahami distribusi data yang akan digunakan.
+
+## 2. Validasi
+
+untuk validasi maka kita akan mengacak data rating:
+
+![image](https://github.com/user-attachments/assets/a2c3504b-7316-46b2-b043-91b5cf186ab8)
+
+untuk validasi maka data dibagi menjadi x dan y untuk dapat ditraining:
+
+![image](https://github.com/user-attachments/assets/46c0f852-a91f-40e1-8d27-bd89906ce7ca)
+
+Cek data validasi
+
+![image](https://github.com/user-attachments/assets/d1f80203-7c86-4046-b2a8-882e2af96ef9)
+
+## 3. Training data
+
+PAda bagian inim model yang sudah dibuat akan ditrain untuk melihat akurasinya
+
+Pertama kita perlu membuat fungsi terselebih dahulu denga kode berikut:
+
+![image](https://github.com/user-attachments/assets/457ee661-96e0-4d85-87ca-0f91646a01d5)
+
+Kode ini mendefinisikan sebuah model rekomendasi menggunakan TensorFlow dan Keras. Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, dan kemudian menghitung skor kecocokan antara pengguna dan makanan.
+Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, kemudian menghitung skor kecocokan antara pengguna dan makanan dengan menambahkan dot product dari embedding dan bias masing-masing. Fungsi aktivasi sigmoid digunakan untuk menghasilkan output akhir.
+
+![image](https://github.com/user-attachments/assets/19539b93-917c-40b1-8752-1e7c8fea6708)
+
+![image](https://github.com/user-attachments/assets/d857772a-c257-4da4-8397-685c34600fec)
+
+
+
 
