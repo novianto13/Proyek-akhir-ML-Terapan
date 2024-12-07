@@ -155,6 +155,27 @@ Hasilnya adalah sebagai sebagai berikut
 ![image](https://github.com/user-attachments/assets/3feb02fe-9677-4371-b501-58bfb532b6a4)
 
 # Data Preparation
-Tahapan ini merupakan lanjutan dari tahap prepocessing yang dilakukan untuk mempersiapakn data 
+Tahapan ini merupakan lanjutan dari tahap prepocessing yang dilakukan untuk mempersiapakn data untuk dapat digunakan. Tahap data preperation yang dilakukan adalah pemberisahn data yang meliputi:
+1. cek data kosong
+2. cek data duplikasi
+
+1. Cek data kosong
+Cek data dilakukan dengan kode sebagia berikut:
+
+![image](https://github.com/user-attachments/assets/e2155ae7-6440-45a4-957a-f36fa5d5cc04)
+
+hasilnya:
+
+![image](https://github.com/user-attachments/assets/50def69c-d17a-4fee-a02b-01fd6c26758f)
+
+Dari hasil tersebut dapat dipahami bahwa terdapat nilai yang mengandung nilai NA adalah 91 dari data User ID dan Rating.
+
+Cek data kosong hasilnya adalah 
+
+![image](https://github.com/user-attachments/assets/b48d865a-47c2-4a8b-8177-01c3f7e568cf)
+
+Dari informasi tersebut maka dapat dimaknai bahwa dapat tidak ada data kosong, namun data yang kosong sudah terisi dengan NAN sebanyak 91. 
+
+
 
 
