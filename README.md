@@ -126,15 +126,35 @@ Poin utama dalam data tersebut adalah pada bagian rating, yang dapat dimaknai se
 
 Untuk dapat melihat rating makanan, maka data dapat dikelompokkan berdasarkan jenis manakan dan ratingnya. Kaitan antara jenis makanan dan rating dapat dilihat pada gambar berikut
 
-![image](https://github.com/user-attachments/assets/c2b4e81b-5f98-4a9a-b3e2-e603f9770328)
+![image](https://github.com/user-attachments/assets/1e488f5e-4acf-419c-9bd2-6d701ad9c9ff)
+
+![image](https://github.com/user-attachments/assets/c6e8a52c-3062-42ee-a4d7-1415fac8cd2f)
 
 Gambar tersebut diperoleh dari tabel berikut ini:
 
 ![image](https://github.com/user-attachments/assets/affcd1cb-d358-4f8c-8e8d-aba80c260b46)
 
 Dari rating jemis makan tersebut dapat dimaknai sebagai berikut:
-1. 
+1. Total konsumen yang memberikan review ada 511 orang.
+2. Konsumen yang memberikan review 3 terbanyak adalah rating 3 (63 konsumen), kemudian rating 5 dan rating 10 yang masing-masing 61 konsumen. Kondisi ini menunjukkan orang 
+3. Banyaknya makanan yang review adalah makanan indian, dan sekaligus makanan yang mendapatkan jumlah rating 10 terbanyak dibandingkan makanan lainnya, yaitu 14 konsumen dari 61 konsumen yang memberikan rating 10. Sekaligus jenis makanan yang paling banyak mendapatkan nilai terendah dari konsumen, yaitu 12 konsumen dari total 48 konnsumen yang memberikan nilai rating 1.
 
+Kesimpulan dari data ini:
 
+Makanan Indian merupakan jenis makanan yang paling banyak dipesan konsumen. Jenis makanan ini juga merupakan jenis kelompok yang mendapatkan penilaian tertinggi dan terendah paling banyak dari konsumen. 
+
+# Data prepocessing
+Tahapan data preprocessing dilakukan untuk mempersiapkan data yang akan diolah. tahapan dilakukan dengan:
+
+Menggambungkan dua data set, yaitu data food dan data rating. penggambungan data ini didasarkan pada Food_ID, supaya hasilnya diurutkan berdasarkan Food_ID.
+
+![image](https://github.com/user-attachments/assets/6cdbaf4d-ae50-485d-a2e1-5d7abee0739c)
+
+Hasilnya adalah sebagai sebagai berikut
+
+![image](https://github.com/user-attachments/assets/3feb02fe-9677-4371-b501-58bfb532b6a4)
+
+# Data Preparation
+Tahapan ini merupakan lanjutan dari tahap prepocessing yang dilakukan untuk mempersiapakn data 
 
 
