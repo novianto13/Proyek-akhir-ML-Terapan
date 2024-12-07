@@ -79,12 +79,62 @@ Terdapat tiga variabel pada dataset ini, yaitu:
 3. Rating. Data ini berisi nilai peringkat atau review dari konsumen.
 
 ### Berikut ini adalah penjelasan data yang digunakan dalam sistem rekomendasi
+### 1. Data food
+
 Dari data makanan yang akan ada dapat ditampilakn makanan berdasarkan jenis kategorinya, sebagai berikut:
 
 ![image](https://github.com/user-attachments/assets/5ad6c437-d142-493b-8523-174691ac2424)
 
-Hasil visualisasi data makanan berdasarkan jenis makanan, dapat dipahami bahwa jumlah makanan tertinggi dalam dataset adalah jenis makanan Indian (India). Sedangkan jumlah makanan yang yang terendah adalah jenis makanan korea dan spanyol. 
+Hasil visualisasi data makanan berdasarkan jenis makanan, dapat dipahami bahwa jumlah makanan tiga tertinggi dalam dataset adalah jenis makanan Indian (India), healty food, dan dessert. Sedangkan jumlah makanan yang yang terendah adalah jenis makanan korea dan spanyol. 
 Berikut adalah rincian datanya:
 
 ![image](https://github.com/user-attachments/assets/d316499f-56a3-4850-b416-60396aad2773)
+
+Dari data makan yang direview, makanan juga dibagi ke dalam dua kelompok, yaitu vegan dan non-vegan.
+
+![image](https://github.com/user-attachments/assets/2052f23a-3994-4288-adb1-99de3728d553)
+
+Dari gambar tersebut di atas, diperoleh informasi bahwa makanan vegan merupakan jenis makanan yang jumlahnya lebih banyak tersedia dari makanan yang non vegan.
+
+Hubungan antara jenis makanan dan kategori makanan dapat ditunjukkan sebagai berikut:
+
+![image](https://github.com/user-attachments/assets/628208c2-38ff-4e7f-832e-ea800cd5b8e8)
+
+Dari gambar di atas dapat dimaknai sebagai berikut:
+1. Dari jenis makanan non vegan, kategori makanan tiga terbanyak adalah makanan indian, chinese, dan thai.
+3. Dari jenis makanan vegan, kategori makanan tiga terbanyak adalah makanan dessert, healty food, dan indian.
+
+### 2 Data rating
+Berikut adalah gambaran data rating dalam dataset:
+
+![image](https://github.com/user-attachments/assets/96732922-7ff4-4f6f-b6e0-321fc4fd6449)
+
+
+Dari data rating tersebut, terdapat tiga kolom atau variabel. yaitu
+1. User_ID. Data ini adalah data terkait dengan ID pengguna yang memberikan rating pada makana yang ada.
+2. Food_ID. Data ini berisi kode atau ID makanan yang ada dalam set
+3. Rating. Berisi peringkat yang diberikan oleh konsumen terhadap makanan yang ada.
+
+Deskripsi data rating adalah sebagai berikut:
+
+![image](https://github.com/user-attachments/assets/a4335dcd-197b-469a-90f5-5e9e9dabea22)
+
+Poin utama dalam data tersebut adalah pada bagian rating, yang dapat dimaknai sebagai berikut:
+1. Rata-rata nilai rating pada makanan adalah 5,4. Nilai ini adalah nilai tengah dimana rating nilai adalah 1 sampai 10.
+2. Nilai terendah yang diberikan oleh konsumen pada makana adalah 1
+3. Nilai tertinggi yang diberikan oleh konsumen adalah 10.
+
+Untuk dapat melihat rating makanan, maka data dapat dikelompokkan berdasarkan jenis manakan dan ratingnya. Kaitan antara jenis makanan dan rating dapat dilihat pada gambar berikut
+
+![image](https://github.com/user-attachments/assets/c2b4e81b-5f98-4a9a-b3e2-e603f9770328)
+
+Gambar tersebut diperoleh dari tabel berikut ini:
+
+![image](https://github.com/user-attachments/assets/affcd1cb-d358-4f8c-8e8d-aba80c260b46)
+
+Dari rating jemis makan tersebut dapat dimaknai sebagai berikut:
+1. 
+
+
+
 
