@@ -426,13 +426,41 @@ untuk validasi maka data dibagi menjadi x dan y untuk dapat ditraining:
 
 ![image](https://github.com/user-attachments/assets/46c0f852-a91f-40e1-8d27-bd89906ce7ca)
 
-Cek data validasi
+Kode ini bertujuan untuk:
+1. Membuat ulang variabel x dan y dari dataframe rating.
+2. Melakukan normalisasi pada kolom Rating.
+3. Membagi dataset menjadi data latih (training) dan data validasi (validation).
+
+Kode ini mempersiapkan data untuk digunakan dalam model pembelajaran mesin dengan melakukan normalisasi pada rating dan membagi dataset menjadi data latih dan data validasi. Ini adalah langkah penting untuk memastikan model dapat dilatih dan divalidasi dengan benar
+
+Keterangan:
+
+kode tersebut diawali dengan membuat ulang variabel x dan y dengan kode:
+
+x = rating[['user', 'food']].values
+y = rating['Rating'].apply(lambda x: (x - min_rating) / (max_rating - min_rating)).values
+
+Selanjutnya adalah membagi dataset dengan kode:
+
+train_indices = int(0.8 * rating.shape[0])
+x_train, x_val, y_train, y_val = (
+    x[:train_indices],
+    x[train_indices:],
+    y[:train_indices],
+    y[train_indices:]
+)
+
+Cek validasi:
 
 ![image](https://github.com/user-attachments/assets/d1f80203-7c86-4046-b2a8-882e2af96ef9)
 
+Kode ini bertujuan untuk memeriksa apakah ada nilai Food_ID dalam data latih (x_train) yang lebih besar atau sama dengan jumlah total makanan (num_food). Nilai Food_ID yang lebih besar dari atau sama dengan num_food dianggap tidak valid karena indeks makanan seharusnya berada dalam rentang 0 hingga num_food - 1.
+
+Kode ini membantu dalam memverifikasi integritas data latih dengan memastikan bahwa semua nilai Food_ID berada dalam rentang yang valid. Jika ada nilai Food_ID yang tidak valid, ini akan ditampilkan sehingga dapat diperbaiki sebelum melanjutkan ke tahap pelatihan model
+
 ### 3. Training data
 
-PAda bagian inim model yang sudah dibuat akan ditrain untuk melihat akurasinya
+Pada bagian inim model yang sudah dibuat akan ditrain untuk melihat akurasinya
 
 Pertama kita perlu membuat fungsi terselebih dahulu denga kode berikut:
 
@@ -443,27 +471,106 @@ Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dal
 
 ![image](https://github.com/user-attachments/assets/19539b93-917c-40b1-8752-1e7c8fea6708)
 
+Kode ini bertujuan untuk menginisialisasi dan meng-compile model rekomendasi (RecommenderNet) dengan parameter yang telah ditentukan. Proses ini mempersiapkan model untuk dilatih dengan data. Tahap ini terdiri dari:
+1. Inisiasi model
+2. Compile model
+Kode ini mempersiapkan model rekomendasi untuk dilatih dengan data. Dengan meng-compile model, kita menentukan fungsi loss, optimizer, dan metrik evaluasi yang akan digunakan selama proses pelatihan. Ini adalah langkah penting sebelum memulai pelatihan model.
+
 ![image](https://github.com/user-attachments/assets/d857772a-c257-4da4-8397-685c34600fec)
 
+Kode ini bertujuan untuk menginisialisasi dan meng-compile model rekomendasi (RecommenderNet) dengan parameter yang telah ditentukan. Proses ini mempersiapkan model untuk dilatih dengan data.
+Kode ini mempersiapkan model rekomendasi untuk dilatih dengan data. Dengan meng-compile model, kita menentukan fungsi loss, optimizer, dan metrik evaluasi yang akan digunakan selama proses pelatihan. Ini adalah langkah penting sebelum memulai pelatihan model.
+
+Hasilnnya adalah sebagai berikut
+
 ![image](https://github.com/user-attachments/assets/828fb7bd-d2a9-4343-8ac2-ed8c6d98f59c)
+
+Berikut adalah keterangannya:
+
+Epoch 97-100: Menunjukkan tahap pelatihan model di epoch ke-97 hingga ke-100 dari total 100 epoch. Setiap epoch mewakili satu kali iterasi lengkap melalui data pelatihan.
+
+Loss: Ini adalah metrik yang dihitung berdasarkan fungsi kehilangan (loss function). Loss mengukur seberapa jauh prediksi model dari nilai sebenarnya dalam data pelatihan. Semakin rendah nilai loss, semakin baik model melakukan pelatihan.
+
+Root Mean Squared Error (RMSE):
+
+Ini adalah akar dari rata-rata kuadrat selisih antara prediksi model dan nilai aktual. RMSE sering digunakan untuk merepresentasikan kesalahan dalam skala yang sama dengan target data.
+root_mean_squared_error adalah nilai RMSE untuk data pelatihan.
+Val_loss dan val_root_mean_squared_error:
+
+Val_loss: Ini adalah nilai loss yang dihitung pada data validasi, yang digunakan untuk mengevaluasi performa model terhadap data yang belum pernah dilihat sebelumnya selama pelatihan.
+val_root_mean_squared_error: Nilai RMSE untuk data validasi. Semakin kecil nilai ini, semakin baik performa model terhadap data validasi.
+uared_error: Ini kemungkinan salah satu metrik tambahan yang Anda definisikan (bisa jadi metrik kustom). Nilainya tampaknya konsisten di sekitar 0.346-0.347, yang bisa menunjukkan metrik khusus lain untuk mengevaluasi model.
+
+Progres Pelatihan (ms/step): Waktu pelatihan per step menunjukkan seberapa cepat setiap batch data diproses. Dalam kasus ini, terlihat bahwa pelatihan berlangsung dengan cukup cepat (2-3 ms per step).
+
+Secara keseluruhan, berdasarkan gambar:
+
+Model terus memperbaiki nilai loss dan RMSE pada data pelatihan, namun val_loss dan val_root_mean_squared_error tampak stabil di sekitar 0.74. Perbedaan yang kecil antara RMSE pada data pelatihan dan validasi mengindikasikan model tidak overfitting.
 
 
 ### 4. Visualisasi matrik
 
+Berikut ini adalah kode untuk melihat hasil training dalam bentuk visualisasi.
+
 ![image](https://github.com/user-attachments/assets/ef270ce7-773d-4dbe-bde9-a88411d626ce)
+
+Hasilnya
 
 ![image](https://github.com/user-attachments/assets/95bb363b-a5d4-40fd-91a6-9b5965d3616f)
 
+Gambar tersebut menunjukkan grafik metrik Root Mean Squared Error (RMSE) terhadap jumlah epoch untuk data pelatihan (train) dan data pengujian (test). Berikut adalah analisis hasil training:
+
+Sumbu X: Merepresentasikan jumlah epoch (dari 0 hingga 100), yaitu jumlah iterasi pelatihan model.
+
+Sumbu Y: Merepresentasikan nilai root mean squared error (RMSE), yang mengukur rata-rata kesalahan antara prediksi model dan nilai sebenarnya.
+
+**Observasi**
+Kurva Pelatihan (Train - Garis Biru):
+
+1. Nilai RMSE untuk data pelatihan terus menurun seiring bertambahnya epoch.
+Ini menunjukkan bahwa model belajar dengan baik dari data pelatihan dan terus memperbaiki performanya.
+2. Tidak ada tanda-tanda stagnasi atau peningkatan RMSE, sehingga pelatihan pada data ini tampak efektif.
+
+Kurva Pengujian (Test - Garis Oranye):
+
+Nilai RMSE untuk data pengujian cenderung meningkat seiring bertambahnya epoch.
+Hal ini menunjukkan bahwa adanya potensi model mengalami overfitting, yaitu model belajar terlalu spesifik pada data pelatihan sehingga kehilangan kemampuan generalisasi terhadap data pengujian.
+
+**Kesimpulan**
+Masalah Overfitting: Model menunjukkan overfitting karena perbedaan yang semakin besar antara RMSE pada data pelatihan dan pengujian. Hal ini dapat disebabkan oleh:
+1. Model terlalu kompleks.
+2. Tidak cukupnya data untuk melatih model.
 
 
 ### 5. Rekomendasi makanan
 
+Tahap rekomendasi ini dimulai dengan membentuk fungsi dari data Food dan rating yang telah disiapkan sebelumnya. Berikut adalah kodenya:
+
 ![image](https://github.com/user-attachments/assets/823b9c4b-fb16-44b2-9cf4-033843576ce9)
+
+Kode tersebut bertujuan untuk mempersiapkan data guna membuat prediksi makanan yang belum direview oleh seorang user tertentu dalam sistem rekomendasi makanan. Proses ini melibatkan encoding data dan membentuk pasangan user-food yang dapat digunakan untuk inferensi model.
+
+Keterangan tahapan kode:
+1. Ambil satu sampel user (user_id).
+2. Identifikasi makanan yang belum direview oleh user tersebut.
+3. Encode ID makanan dan ID user ke bentuk numerik.
+4. Bentuk pasangan user-makanan yang dapat diproses oleh model untuk prediksi.
+
+Kode ini membantu membuat data input untuk model sistem rekomendasi berbasis collaborative filtering atau neural network, di mana model akan memprediksi rating atau rekomendasi untuk makanan yang belum direview oleh user tertentu.
+
+Selanjutnya sistem akan menunjukkan  rekomendasi makanan terbaik dan makanan yang memiliki kemiripan dengan jenis makanan tersebut. Berikut ini kodenya:
 
 ![image](https://github.com/user-attachments/assets/54cd1d3d-2e22-4e9b-a23f-d2abaae46859)
 
+
+Hasilnya berikut ini
+
+Makanan Favorit User: Daftar makanan dengan rating tertinggi yang telah direview oleh user.
+Rekomendasi Makanan: Daftar 10 makanan yang belum direview tetapi diprediksi memiliki rating tinggi untuk user tersebut. Rekomendasi ini bisa digunakan untuk meningkatkan pengalaman user dalam sistem rekomendasi.
+
 ![image](https://github.com/user-attachments/assets/21b39659-8078-4532-bcfb-57f69c144e98)
 
+saat sistem merekomendasikan 
 
 # Kesimpulan
 
