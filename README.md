@@ -22,7 +22,7 @@ Dalam konteks makanan, banyak pengguna sering merasa kewalahan dengan banyaknya 
 
 ## Problem Statements
 1. Makanan apa yang  sesuai dengan preferensi mereka di antara banyaknya pilihan?
-2. Makanan apa yang direkomendasikan berdasarkan rating pengguna.
+2. Makanan apa yang direkomendasikan berdasarkan rating pengguna?
 
 ## Goals
 Pengguna mendapatkan rekomendasi makanan yang relevan dan dipersonalisasi oleh pengguna.
@@ -570,7 +570,59 @@ Rekomendasi Makanan: Daftar 10 makanan yang belum direview tetapi diprediksi mem
 
 ![image](https://github.com/user-attachments/assets/21b39659-8078-4532-bcfb-57f69c144e98)
 
-saat sistem merekomendasikan 
+Saat sistem merekomendasikan makanan yang memiliki reting tinggi yaitu: almond pearls yaitu (Snack), Sistem juga memberikan rekomendasi makanan snack yang mirip dari berbagai jenis makanan, seperti berikut ini:
 
-# Kesimpulan
+1. corn and raw mango salad : Healthy Food
+2. sugar free modak : Japanese
+3. andhra pan fried pomfret : Indian
+4. steam bunny chicken bao : Japanese
+5. hot chocolate : Beverage
+6. grilled lemon margarita : Beverage
+7. spiced coffee : Beverage
+8. filter coffee : Beverage
+9. garlic and pinenut soup with burnt butter essence : French
+10. roasted spring chicken with root veggies : Healthy Food
+
+
+# Kesimpulan Proyek
+Sistem rekomendasi ini bertujuan untuk memberikan saran makanan yang relevan bagi pengguna (user) berdasarkan preferensi mereka di masa lalu dan pola perilaku pengguna lainnya. Ini dicapai melalui pendekatan berbasis collaborative filtering atau neural network, di mana sistem mempelajari hubungan antara pengguna dan makanan berdasarkan data historis.
+
+Proses Utama dari sistem rekoemndasi ini adalah berikut:
+1. Proses keseluruhan terdiri dari beberapa langkah penting:
+Pengumpulan Data: Data rating makanan oleh pengguna digunakan sebagai input utama. Data ini mencakup user ID, food ID, rating, deskripsi makanan, dan jenis makanan.
+
+2. Pemilihan Pengguna dan Makanan:
+Sistem secara acak memilih seorang pengguna (user) untuk dianalisis.
+Menentukan makanan yang telah direview dan makanan yang belum direview oleh pengguna tersebut.
+
+3. Encoding Data: ID pengguna dan makanan diencode ke format numerik agar dapat diproses oleh model.
+Prediksi Rating: Model memprediksi skor/rating untuk makanan yang belum direview oleh pengguna.
+
+4.  Penyaringan Rekomendasi:
+Sistem memilih 10 makanan dengan prediksi rating tertinggi sebagai rekomendasi untuk pengguna. Makanan duplikat dihapus berdasarkan nama dan jenisnya.
+
+**Keunggulan Sistem:**
+1. Personalisasi: Rekomendasi didasarkan pada preferensi unik setiap pengguna.
+2. Efisiensi: Dengan encoding dan prediksi berbasis model, sistem dapat memberikan rekomendasi dengan cepat meskipun ada banyak data.
+3. Eksplorasi Baru: Sistem memperkenalkan makanan baru yang kemungkinan akan disukai pengguna, membantu memperluas pilihan mereka.
+
+**Hasil Akhir:**
+Walaupun ada potensi overfifting, hasil sistem rekomendasi ini berhasil memberikan hasil dari pertanyaan dan tujuan bisnis yang menjadi tujuan dari proyek ini.
+
+1. Makanan Favorit Pengguna:
+Sistem menampilkan 5 makanan yang sudah direview oleh pengguna dengan rating tertinggi. Ini mencerminkan preferensi eksplisit pengguna.
+
+2. Rekomendasi Makanan:
+Sistem merekomendasikan 10 makanan baru yang belum direview tetapi diprediksi memiliki rating tinggi oleh model. Rekomendasi ini dirancang untuk memperluas pengalaman pengguna dan mencocokkan preferensi mereka.
+
+
+**Kesimpulan Akhir:**
+Sistem rekomendasi ini menunjukkan kemampuan untuk memprediksi dan menyarankan makanan secara personal bagi pengguna berdasarkan data historis. Dengan cara ini, pengguna tidak hanya mendapatkan pengalaman yang lebih relevan, tetapi juga diperkenalkan ke opsi baru yang sesuai dengan preferensi mereka. Sistem ini dapat terus ditingkatkan dengan lebih banyak data, teknik regulasi yang lebih baik, atau integrasi metode berbasis konten untuk mengatasi kekurangan dalam skenario cold-start.
+
+
+
+
+
+
+
 
