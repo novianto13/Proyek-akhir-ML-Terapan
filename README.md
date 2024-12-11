@@ -238,7 +238,8 @@ fit: Mempelajari kosakata dan bobot IDF (Inverse Document Frequency) dari kolom 
 
 transform: Mengonversi jenis masakan menjadi representasi numerik yang disebut matriks TF-IDF, di mana setiap baris mewakili item makanan dan setiap kolom mewakili kata unik dalam jenis masakan. Nilai dalam matriks mewakili skor TF-IDF, yang menunjukkan pentingnya setiap kata dalam jenis masakan setiap item makanan.
 
-![image](https://github.com/user-attachments/assets/d855731b-45f5-46fd-927d-a3e24638a6ed)
+![image](https://github.com/user-attachments/assets/56afb6ef-1c63-4ac4-9533-ad0a96152794)
+
 
 Untuk dapat melihat matriks dalam data frame yang lebih jelas maka matriks dapat ditampilakn dalam tampilan berikut ini:
 
@@ -261,9 +262,19 @@ Pada tahap sebelumnya, kita telah berhasil mengidentifikasi korelasi antara rest
 
 ![image](https://github.com/user-attachments/assets/c8397199-c7a5-41ee-970c-58d2b6318538)
 
+Kode ini bertujuan untuk menghitung cosine similarity antara dokumen-dokumen yang diwakili dalam bentuk matriks TF-IDF (Term Frequency-Inverse Document Frequency). Cosine similarity adalah ukuran kesamaan antara dua vektor yang mengukur sudut kosinus di antara mereka. Berikut penjelasannya:
+
+1. cosine_similarity(tfidf_matrix): Fungsi ini menghitung cosine similarity antara semua pasangan dokumen dalam matriks TF-IDF yang diberikan. Matriks TF-IDF adalah representasi numerik dari dokumen-dokumen yang menunjukkan seberapa penting suatu kata dalam dokumen tertentu relatif terhadap seluruh kumpulan dokumen.
+2. cosine_sim: Variabel ini menyimpan hasil dari perhitungan cosine similarity. Hasilnya adalah matriks dua dimensi di mana setiap elemen (i, j) menunjukkan kesamaan antara dokumen i dan dokumen j.
+
+Selanjutnya kode berikut ini bertujuan untuk membuat dataframe dari variabel cosine_sim dengan baris dan kolom yang diberi nama sesuai dengan nama restoran. Ini memungkinkan kita untuk melihat kesamaan antara setiap pasangan restoran berdasarkan matriks cosine similarity yang telah dihitung sebelumnya.
 
 ![image](https://github.com/user-attachments/assets/65a68e59-852c-4181-8fee-fcac0f7ab149)
 
+erikut penjelasannya:
+1. pd.DataFrame(cosine_sim, index=food['Name'], columns=food['Name']): Membuat dataframe dari matriks cosine similarity (cosine_sim). Baris dan kolom dataframe ini diberi label menggunakan nama restoran yang diambil dari kolom 'Name' dalam dataframe food.
+2. print('Shape:', cosine_sim_df.shape): Mencetak bentuk (dimensi) dari dataframe cosine_sim_df.
+3. cosine_sim_df.sample(5, axis=1).sample(10, axis=0): Menampilkan sampel acak dari 5 kolom dan 10 baris dari dataframe cosine_sim_df. Ini membantu untuk melihat sebagian kecil dari matriks kesamaan secara acak.
 
 ### 4.2.3. Mendapatkan rekomendasi
 Sebelumnya, kita telah memiliki data similarity (kesamaan) antar makanan. selanjutnya adalah menhasilkan sejumlah makanan yang akan direkomendasikan kepada pengguna. Di sini, kita membuat fungsi resto_recommendations dengan beberapa parameter sebagai berikut:
@@ -357,7 +368,7 @@ Untuk melakukan sistem rekomendasi dengan Collaborative Filtering, kita akan mem
 ### 4.3.1. Encode label
 Pada tahap ini, Anda perlu melakukan persiapan data untuk menyandikan (encode) fitur ‘User_ID’ dan 'Food_ID' ke dalam indeks integer. Terapkan kode berikut.
 
-**1. langkah pertama adalah ini dilakukan dengna membuat kode untuk melakukan encoded pada data rating.** 
+**1. langkah pertama adalah melakukan encoded pada data rating.** 
 Kodenya adalah sebagai berikut
 
 ![image](https://github.com/user-attachments/assets/111d0cbd-aed1-41c1-a9da-1e209abe29b2)
@@ -400,47 +411,61 @@ hasilnya
 
 Kode ini membantu dalam proses transformasi User_ID menjadi bentuk yang lebih mudah diproses oleh model pembelajaran mesin dengan melakukan encoding dua arah: dari User_ID ke angka dan sebaliknya. Ini sangat berguna dalam sistem rekomendasi atau model lain yang memerlukan representasi numerik dari data kategorikal.
 
-**2. Mempersiapkan data makanan**
+**2. Langkah kedua encode pada data makanan**
+
+![image](https://github.com/user-attachments/assets/2cb7dbaa-8f77-4aa6-8a3b-d5317bfceae9)
+
+Kode ini bertujuan untuk mengubah daftar Food_ID menjadi daftar unik, kemudian melakukan encoding pada Food_ID tersebut menjadi angka, dan sebaliknya.
+
+Keterangan adalah sebagai berikut:
+
+food_ids: Daftar Food_ID yang unik.
+
+food_to_food_encoded: Dictionary yang memetakan Food_ID ke angka unik.
+
+food_encoded_to_food: Dictionary yang memetakan angka unik kembali ke Food_ID.
+
+Dengan melakukan encoding ini, kita dapat dengan mudah mengubah Food_ID menjadi angka untuk keperluan pemrosesan data lebih lanjut, seperti dalam model machine learning, dan kemudian mengubahnya kembali ke Food_ID asli.
+
+**3. langkah ketiga adaah maping data raging dan food**
 
 Kodenya
 
-![image](https://github.com/user-attachments/assets/1ab14d54-96d1-434e-a637-99d1e572798b)
+![image](https://github.com/user-attachments/assets/a01e222b-6478-418a-9a37-a7cb401c7506)
 
-Kode ini bertujuan untuk mengubah Food_ID menjadi bentuk yang lebih mudah diproses oleh model pembelajaran mesin, yaitu dengan melakukan encoding pada Food_ID. Encoding ini mengubah Food_ID menjadi angka unik yang sesuai dengan indeksnya.
+Kode ini bertujuan untuk memetakan Food_ID ke kolom baru dalam dataframe rating menggunakan dictionary food_to_food_encoded, dan kemudian memeriksa apakah ada nilai NaN (Not a Number) setelah proses pemetaan.
 
-Kode ini membantu dalam proses transformasi Food_ID menjadi bentuk yang lebih mudah diproses oleh model pembelajaran mesin dengan melakukan encoding dua arah: dari Food_ID ke angka dan sebaliknya. Ini sangat berguna dalam sistem rekomendasi atau model lain yang memerlukan representasi numerik dari data kategorikal.
+Penjelasan:
+1. rating['food']: Kolom baru dalam dataframe rating yang berisi hasil pemetaan Food_ID ke angka unik.
+2. .map(food_to_food_encoded): Fungsi yang digunakan untuk memetakan nilai Food_ID ke angka unik berdasarkan dictionary food_to_food_encoded.
+3. .isnull().sum(): Fungsi yang menghitung jumlah nilai NaN dalam kolom.
 
-**3. Mapping Food_ID dalam dataframe**
+Dengan kode ini, kita memastikan bahwa setiap Food_ID telah berhasil dipetakan ke angka unik dan memeriksa apakah ada kesalahan dalam proses pemetaan yang menghasilkan nilai NaN.
 
-Kodenya
+Untuk memastikan data termaping dengan baik, maka langkah berikut perlu dilakukan
 
-![image](https://github.com/user-attachments/assets/cff6b62b-5491-40c4-bb31-0014ce7a0a11)
+![image](https://github.com/user-attachments/assets/a6159397-7e7b-4e81-b246-53738d26713b)
 
-Kode ini bertujuan untuk memetakan Food_ID ke dalam dataframe rating menggunakan dictionary food_to_food_encoded, dan kemudian memeriksa apakah ada nilai NaN setelah proses pemetaan.
+Kode ini bertujuan untuk memverifikasi bahwa semua Food_ID dalam dataframe rating telah berhasil dipetakan ke angka unik tanpa ada yang terlewat.
 
-Kode ini memastikan bahwa setiap Food_ID dalam dataframe rating berhasil dipetakan ke nilai yang telah diencode. Selain itu, kode ini juga memeriksa apakah ada kesalahan dalam proses pemetaan yang menyebabkan nilai NaN.
+Penejlasan:
+1. len(rating['Food_ID'].unique()): Menghitung jumlah Food_ID yang unik dalam dataframe rating.
+2. len(food_to_food_encoded): Menghitung jumlah entri dalam dictionary food_to_food_encoded.
+3. set(rating['Food_ID']) - set(food_to_food_encoded.keys()): Mengidentifikasi Food_ID yang tidak ada dalam dictionary food_to_food_encoded.
 
-**4. Cek nilai dari Food_ID yang digunakan dasar mapping rekomendasi**
+Dengan kode ini, kita memastikan bahwa semua Food_ID dalam dataframe rating telah berhasil dipetakan ke angka unik dan tidak ada yang terlewat.
 
-Kodenya
 
-![image](https://github.com/user-attachments/assets/b6564677-0893-4355-a3e4-8d022749e589)
+![image](https://github.com/user-attachments/assets/a51e6e5c-77ba-4d88-a116-7f937ea1bcb5)
 
-Kode ini bertujuan untuk memverifikasi bahwa semua Food_ID dalam dataframe rating telah berhasil dipetakan ke nilai yang telah diencode, serta memastikan tidak ada Food_ID yang tidak termapping.
+Dengan langkah-langkah ini, kamu memastikan bahwa setiap User_ID dan Food_ID telah berhasil dipetakan ke angka unik dan siap digunakan dalam analisis atau model machine learning.
 
-Kode ini memastikan bahwa semua Food_ID dalam dataframe rating telah berhasil dipetakan ke nilai yang telah diencode dan tidak ada Food_ID yang terlewat. Ini penting untuk memastikan integritas data sebelum digunakan dalam model pembelajaran mesin.
 
-Pada akhirnya maping diseiapkan dengan kode berikut ini. Kode ini bertujuan untuk melakukan encoding pada Food_ID dan memetakan hasil encoding tersebut ke dalam kolom baru food di dataframe rating. 
+![image](https://github.com/user-attachments/assets/a497d1dd-5df6-49cb-858a-e433d5500149)
 
-![image](https://github.com/user-attachments/assets/b6c1e9dc-da40-4dfc-bd1f-99a3989a2e22)
+Tahap persiapan telah selesai. Berikut adalah hal-hal yang telah kita lakukan pada tahap ini:
 
-Kode ini memastikan bahwa setiap Food_ID dalam dataframe rating berhasil dipetakan ke nilai yang telah diencode, dan hasilnya disimpan dalam kolom baru food. Ini penting untuk mempersiapkan data sebelum digunakan dalam model pembelajaran mesin atau analisis lebih lanjut.
-
-Mapping juga dilakukan pada data rating dengan kode berikut
-
-![image](https://github.com/user-attachments/assets/a59efc6d-5d16-4fad-a857-f2b4a49ee571)
-
-![image](https://github.com/user-attachments/assets/44401c4c-f452-4b02-870f-6481ec0fa1b9)
+Memahami data rating yang kita miliki. Menyandikan (encode) fitur ‘User_ID’ dan ‘placeID’ ke dalam indeks integer. Memetakan ‘User_ID’ dan ‘pl 'Food_ID’ ke dataframe yang berkaitan. Mengecek beberapa hal dalam data seperti jumlah user, jumlah makanan, kemudian mengubah nilai rating menjadi float.
 
 Kode ini bertujuan untuk:
 
@@ -448,10 +473,6 @@ Kode ini bertujuan untuk:
 2. Mengubah kolom Rating menjadi tipe data float.
 3. Menentukan nilai minimum dan maksimum dari kolom Rating.
 4. Menampilkan informasi tersebut.
-
-Hsilnya adalah 
-
-![image](https://github.com/user-attachments/assets/c5c8ff46-b2f3-458f-a47b-3d54d134bc08)
 
 Kode ini membantu dalam mempersiapkan dan memverifikasi data sebelum digunakan dalam analisis atau model pembelajaran mesin. Dengan mengetahui jumlah pengguna dan makanan, serta rentang nilai rating, kita dapat lebih memahami distribusi data yang akan digunakan.
 
