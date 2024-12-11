@@ -401,6 +401,7 @@ hasilnya
 Kode ini membantu dalam proses transformasi User_ID menjadi bentuk yang lebih mudah diproses oleh model pembelajaran mesin dengan melakukan encoding dua arah: dari User_ID ke angka dan sebaliknya. Ini sangat berguna dalam sistem rekomendasi atau model lain yang memerlukan representasi numerik dari data kategorikal.
 
 **2. Mempersiapkan data makanan**
+
 Kodenya
 
 ![image](https://github.com/user-attachments/assets/1ab14d54-96d1-434e-a637-99d1e572798b)
@@ -410,6 +411,7 @@ Kode ini bertujuan untuk mengubah Food_ID menjadi bentuk yang lebih mudah dipros
 Kode ini membantu dalam proses transformasi Food_ID menjadi bentuk yang lebih mudah diproses oleh model pembelajaran mesin dengan melakukan encoding dua arah: dari Food_ID ke angka dan sebaliknya. Ini sangat berguna dalam sistem rekomendasi atau model lain yang memerlukan representasi numerik dari data kategorikal.
 
 **3. Mapping Food_ID dalam dataframe**
+
 Kodenya
 
 ![image](https://github.com/user-attachments/assets/cff6b62b-5491-40c4-bb31-0014ce7a0a11)
@@ -419,6 +421,7 @@ Kode ini bertujuan untuk memetakan Food_ID ke dalam dataframe rating menggunakan
 Kode ini memastikan bahwa setiap Food_ID dalam dataframe rating berhasil dipetakan ke nilai yang telah diencode. Selain itu, kode ini juga memeriksa apakah ada kesalahan dalam proses pemetaan yang menyebabkan nilai NaN.
 
 **4. Cek nilai dari Food_ID yang digunakan dasar mapping rekomendasi**
+
 Kodenya
 
 ![image](https://github.com/user-attachments/assets/b6564677-0893-4355-a3e4-8d022749e589)
@@ -452,7 +455,7 @@ Hsilnya adalah
 
 Kode ini membantu dalam mempersiapkan dan memverifikasi data sebelum digunakan dalam analisis atau model pembelajaran mesin. Dengan mengetahui jumlah pengguna dan makanan, serta rentang nilai rating, kita dapat lebih memahami distribusi data yang akan digunakan.
 
-### 4.3.2. Validasi
+### 4.3.2. Split Data untuk Validasi
 
 untuk validasi maka kita akan mengacak data rating:
 
@@ -473,7 +476,6 @@ Keterangan:
 
 kode tersebut diawali dengan membuat ulang variabel x dan y dengan kode:
 
-### 4.3.4. Split Data
 
 x = rating[['user', 'food']].values
 y = rating['Rating'].apply(lambda x: (x - min_rating) / (max_rating - min_rating)).values
@@ -496,7 +498,12 @@ Kode ini bertujuan untuk memeriksa apakah ada nilai Food_ID dalam data latih (x_
 
 Kode ini membantu dalam memverifikasi integritas data latih dengan memastikan bahwa semua nilai Food_ID berada dalam rentang yang valid. Jika ada nilai Food_ID yang tidak valid, ini akan ditampilkan sehingga dapat diperbaiki sebelum melanjutkan ke tahap pelatihan model
 
-### 4.3.5. Training data
+
+### 4.3.3. Training data
+
+Pada tahap ini, model menghitung skor kecocokan antara pengguna dan makanan dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan resto. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan food. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan food. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid.
+
+Di sini, kita membuat class RecommenderNet dengan keras Model class. Kode class RecommenderNet ini terinspirasi dari tutorial dalam situs Keras dengan beberapa adaptasi sesuai kasus yang sedang kita selesaikan. Terapkan kode berikut.
 
 Pada bagian inim model yang sudah dibuat akan ditrain untuk melihat akurasinya
 
