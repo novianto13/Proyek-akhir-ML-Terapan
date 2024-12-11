@@ -10,7 +10,27 @@ Original file is located at
 
 # Nama: Novianto
 
+Proyek ini akan membuat sistem rekomendasi untuk makanan.
+
+**Business Understanding**
+
+Dalam konteks makanan, banyak pengguna sering merasa kewalahan dengan banyaknya pilihan yang tersedia. Mereka kesulitan menemukan makanan yang sesuai dengan preferensi mereka, baik karena keterbatasan informasi, waktu, maupun pengalaman. Hal ini menyebabkan pengalaman pengguna yang kurang optimal, penurunan loyalitas, dan potensi kehilangan pendapatan bagi platform makanan atau restoran.
+
+**Problem Statements**
+1. Makanan apa yang  sesuai dengan preferensi mereka di antara banyaknya pilihan?
+2. Makanan apa yang direkomendasikan berdasarkan rating pengguna?
+
+**Goals**
+
+Pengguna mendapatkan rekomendasi makanan yang relevan dan dipersonalisasi oleh pengguna.
+Pengguna mendapatkan rekomendasi data seperti nama makanan, jenis makanan, deskripsi, dan rating untuk memahami preferensi pengguna.
+
+
+Berikut ini adalah langkah yang diperlukan untuk membuat sistem rekomendasi.
+
 # 1. Pemahaman data
+
+Berikut adalah import  library yang diperlukan dalam pembuatan rekomendasi sistem.
 """
 
 import pandas as pd
@@ -31,17 +51,46 @@ from sklearn.neighbors import NearestNeighbors
 import re
 import string
 
+"""Sistem rekomendasi yang akan dibuat adalah sistem yang akan memberikan rekomendasi makanan berdasarkan rating makanan dalam dataset. Berikut adalah data makanan yang digunakan.
+
+Datase pada proyek ini diambil dari Kaggle
+https://www.kaggle.com/datasets/schemersays/food-recommendation-system
+"""
+
 food = pd.read_csv('https://raw.githubusercontent.com/novianto13/Proyek-akhir-ML-Terapan/main/Food.csv')
 food.head()
 
 food.info()
 
+"""Data makanan terdiri dari 5 kolom. yaitu:
+1. food_ID yang merupakan ID makanan
+2. Nama makanan
+3. C_Type yang menunjukkan jenis makanan
+4. Veg_Non yang menunjukkan kategori makanan
+5. Deskrisi makanan.
+
+Dari info data menunjukkan bahwa terdapat 400 data dengan satu baris data yang nol atau kosong
+
+Berikutnya adalah data rating yang menunjukkan peringkat makanan.
+"""
+
 rating = pd.read_csv('https://raw.githubusercontent.com/novianto13/Proyek-akhir-ML-Terapan/main/ratings.csv')
 rating.head()
 
+"""Data rating terdiri dari tiga kolom yaitu:
+1. user ID yang menunjukkan ID konsumen
+2. Food ID atau kode/ID makanan yang di review
+3. Rating yang meunjukkan peringkat makanan
+"""
+
 rating.info()
 
-"""## Data food"""
+"""Info  data menunjukkan bahsa ada 512 data dengan satu data nol.
+
+## 1.1 Pemahaman Data food
+
+Setelah load data, maka tahap ini kita akan memahami data lebih lanjut dengan visualisasi dan analisa data awal.
+"""
 
 sns.countplot(x='C_Type', data=food)
 plt.title('Distribusi C_Type')
@@ -50,17 +99,23 @@ plt.ylabel('Jumlah')
 plt.xticks(rotation=45, ha='right') # Rotasi label sumbu x jika diperlukan
 plt.show()
 
+"""Grafik di atas menunjukkan jumlah makanan dalam dataset berdasarkan jenis makanan.  Dari grafik tersebut maka dapat dipahami bahwa jenis makanan indian/india merupakan makanan yang paling banyak dalam menu."""
+
 sns.countplot(x='Veg_Non', data=food)
 plt.title('Distribusi Veg_Non')
 plt.xlabel('Veg_Non')
 plt.ylabel('Jumlah')
 plt.show()
 
+"""Grafik di atas adalah perbandingan jumlah kategori makanan vegan dan non vegan. grafik menunjukkan bahwa makanan yang masuk dalam kategori vegan lebih banyak dari pada non vegan."""
+
 c_type_counts = food['C_Type'].value_counts()
 veg_non_counts = food['Veg_Non'].value_counts()
 
 print("Jumlah data pada C_Type:\n", c_type_counts)
 print("\nJumlah data pada Veg_Non:\n", veg_non_counts)
+
+"""Secara jelas, data di atas menunjukkan bahwa terdapat 88 jenis makanan India yang paling banyak dari pada jenis makanan yang lain."""
 
 pd.crosstab(food['C_Type'], food['Veg_Non']).plot(kind='bar', stacked=True)
 plt.title('Hubungan antara C_Type dan Veg_Non')
@@ -70,24 +125,40 @@ plt.xticks(rotation=45, ha='right') # Rotasi label sumbu x jika diperlukan
 plt.legend(title='Veg_Non')
 plt.show()
 
+"""Grafik di atas menunjukkan perbandingan kategori makanan pada setiap jenis makanan. Rincian data dapat dilihat pada keterangan berikut ini"""
+
 cross_tab = pd.crosstab(food['C_Type'], food['Veg_Non'])
 print(cross_tab)
 
-"""## Data rating"""
+"""Dari informasi di atas, dapat dipahami bahwa makanan india yang paling banyak adalah masuk kategori Non vegan, sedangkan makanan yang masuk kategori vegan yang paling banyak adalah masuk dalam jenis healty food.
+
+## 1.2. Pemahaman data rating
+
+Berikutnya adalah memahami data rating.
+"""
 
 rating.describe()
+
+"""Data rating meruapakn data yang bersifat angka sehingga bisa dilihat statistik deskriptif. Statistik deskriptif menunjukkan bahwa rata-rata rating yang diberikan olejh pangguna adalah 5.4, sedangkan rating tertinggi adalah 10 dan terendah adalah 1."""
 
 print('Jumlah user ID: ', len(rating.User_ID.unique()))
 print('Jumlah food ID: ', len(rating.Food_ID.unique()))
 print('Jumlah data rating: ', len(rating))
 
-"""## Data preprocessing"""
+"""Informasi di atas menunjukkan bahwa  terdapat 512 data, namun ada 1 data yang memiliki nilai 0.
+
+## 1.3. Penggabungan data
+
+tahap ini dilakukan untuk mempersiapkan data yang akan digunakan dalam sistem rekomendasi.
+"""
 
 # Menggabungkan dataset food dan rating berdasarkan Food_ID
 food_rating = pd.merge(food, rating, on='Food_ID', how='left')
 
 # Menampilkan 5 baris pertama dari dataset yang sudah digabungkan
 print(food_rating.head())
+
+"""Kode di atas ditujukan untuk dapat menggabungkan data rating dan data food sehinga informasi yang diperoleh lebih lengkap."""
 
 # Mengelompokkan data berdasarkan 'Food_Name' dan menghitung rata-rata rating
 food_ratings = food_rating.groupby('Name')['Rating'].mean().reset_index()
@@ -97,6 +168,8 @@ top_10_foods = food_ratings.sort_values(by=['Rating'], ascending=False).head(10)
 
 # Menampilkan 10 nama makanan dengan rating tertinggi
 print("10 Nama Makanan dengan Rating Tertinggi:\n", top_10_foods)
+
+"""pada contoh di atas ini, kita dapat informasi makanan yang mendapatkan reting 10."""
 
 # Mengelompokkan data berdasarkan 'Food_Name' dan menghitung rata-rata rating
 food_ratings = food_rating.groupby('Name')['Rating'].mean().reset_index()
@@ -114,6 +187,8 @@ bottom_5_foods = sorted_ratings.tail(5)
 print("5 Nama Makanan dengan Rating Tertinggi:\n", top_5_foods)
 print("\n5 Nama Makanan dengan Rating Terendah:\n", bottom_5_foods)
 
+"""Kita dapat melihat data makanan dengan rating tinggi dan rendah"""
+
 # Menghitung jumlah data untuk setiap rating
 rating_counts = food_rating['Rating'].value_counts()
 
@@ -124,6 +199,8 @@ total_data = len(food_rating)
 print("Jumlah data berdasarkan rating:")
 print(rating_counts)
 print("\nJumlah total data:", total_data)
+
+"""Hasil kode di atas menunjukkan barapa jumlah pengunjung atau konsumen yang memberikan review untuk setiap ratingnya. Dari informasi tersebut, mayoritas konsumen memmberikan raview pada rating 3, 5, 10."""
 
 # Menghitung jumlah data untuk setiap rating
 rating_counts = food_rating['Rating'].value_counts()
@@ -138,6 +215,8 @@ plt.title("Jumlah Data Berdasarkan Rating")
 
 # Menampilkan grafik
 plt.show()
+
+"""Grafik diatas menunjukkan visualisasi jumlah rating yang diberikan dari setiap konsumen."""
 
 # manampilkan tabel rating dan jenis makanan
 
@@ -160,6 +239,11 @@ rating_food_counts['Jumlah'] = rating_food_counts.sum(axis=1)
 print("Jumlah Data Berdasarkan Rating dan Jenis Makanan:")
 display(rating_food_counts)
 
+"""Dengan penggabungna dataset, maka kita dapat informasi yang lebih rinci untuk setiap jenis makanan dan hasil ratingnya.
+DAri informasi tersebut, dapat diperoleh informasi bahwa makanan india merupakan makanan yang paling banyak mendapatkan rating tertinggi sekaligus yang paling banyak mendapatkan rating terendah.
+Hal ini mungkin karena jenis makanan india adalah makanan yang paling banyak jumlahnya.
+"""
+
 # Mengambil data dari tabel rating_food_counts
 rating_food_counts = food_rating.groupby(['Rating', 'C_Type']).size().unstack(fill_value=0)
 
@@ -176,12 +260,14 @@ plt.legend(title='Rating')
 # Menampilkan grafik
 plt.show()
 
-"""# Data Preparation
+"""Berikut adalah visualisasi yang menunjukkan jumlah rating pada setiap jenis makanan.
 
-## Cleaning data
+## 1.4. Cek data duplikat
 """
 
 food_rating.duplicated().sum()
+
+"""Hasil cek data duplikasi menunjukkan tidak ada data duplikat."""
 
 # Pindahkan kolom 'User_ID' ke posisi paling kiri
 food_rating = food_rating[['User_ID'] + [col for col in food_rating.columns if col != 'User_ID']]
@@ -190,6 +276,8 @@ food_rating = food_rating[['User_ID'] + [col for col in food_rating.columns if c
 print(food_rating.head())
 
 food_rating.info()
+
+"""## 1.5. Cek data Kosong dan Nan"""
 
 # Mengecek keberadaan nilai NaN di setiap kolom
 print(food_rating.isna().any())
@@ -219,11 +307,31 @@ total_na = na_counts.sum()
 print("Jumlah data NaN di setiap kolom:\n", na_counts)
 print("\nTotal data NaN di seluruh dataset:", total_na)
 
+"""# 2. Data Preprocessing dan Preparation
+
+Tahapan ini dilakukan untuk mempersiapkan data supaya dapat dibbuat model dan proses lebih lanjut.
+
+## 2.1. Cleaning data
+
+Pada tahap ini, membersihkan data dari nilai-nilai yang hilang, duplikat. Langkah ini penting untuk memastikan kualitas data yang akan dianalisis lebih lanjut.
+
+Hasil pemahaman data menunjukkan bahwa masalah data adalah hanya data NAN, yang terdapat pada kolom rating dan user id.
+
+Oleh karena itu, langkah perbaikan data dilakukan dengan menghapus data NAN.
+"""
+
 # Menghapus baris yang mengandung nilai NaN
 food_rating = food_rating.dropna()
 
 # Menampilkan jumlah baris dan kolom setelah menghapus data NaN
 print("Ukuran dataset setelah menghapus data NaN:", food_rating.shape)
+
+"""Setelah data Nan dibapus, maka terdapat 511 data yang siap proses lanjut.
+
+## 2.2. Perbaikan tipe data
+
+Perbaikan tipe data ini supaya data angka dapat diperose lebih lanjut.
+"""
 
 # Mengubah tipe data kolom 'User_ID' dan 'Rating' menjadi int
 food_rating['User_ID'] = food_rating['User_ID'].astype(int)
@@ -232,14 +340,18 @@ food_rating['Rating'] = food_rating['Rating'].astype(int)
 # Menampilkan informasi tipe data dari dataset food_rating
 print(food_rating.info())
 
+"""Data yang diubah adalah User_ID, Food_D, dan Rating"""
+
 # hasil gabungan data
 food_rating.head(5)
 
-"""# Model
+"""## 2.3. Content Based Filtering
 
-## Content Based Filtering
+Membuat rekomendasi berdasarkan konten
 
-### TF-IDF Vectorizer
+### 2.3.1. TF-IDF Vectorizer
+
+Pada tahap ini, kita akan membangun sistem rekomendasi sederhana berdasarkan jenis masakan yang disediakan restoran. Teknik ini juga akan digunakan pada sistem rekomendasi untuk menemukan representasi fitur penting dari setiap kategori masakan.
 """
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -275,7 +387,10 @@ pd.DataFrame(
     index=food.Name
 ).sample(num_cols_to_sample, axis=1, replace=False).sample(num_rows_to_sample, axis=0, replace=False)
 
-"""### Cosine similraity"""
+"""### 2.3.2. Cosine similraity
+
+Pada tahap sebelumnya, kita telah berhasil mengidentifikasi korelasi antara restoran dengan kategori masakannya. Sekarang, kita akan menghitung derajat kesamaan (similarity degree) antar restoran dengan teknik cosine similarity. Di sini, kita menggunakan fungsi cosine_similarity dari library sklearn.
+"""
 
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -290,7 +405,24 @@ print('Shape:', cosine_sim_df.shape)
 # Melihat similarity matrix pada setiap resto
 cosine_sim_df.sample(5, axis=1).sample(10, axis=0)
 
-"""### Mendapatkan Rekomendasi"""
+"""### 2.3.3. Mendapatkan Rekomendasi
+
+Sebelumnya, kita telah memiliki data similarity (kesamaan) antar makanan. selanjutnya adalah menhasilkan sejumlah makanan yang akan direkomendasikan kepada pengguna.
+
+
+Di sini, kita membuat fungsi resto_recommendations dengan beberapa parameter sebagai berikut:
+
+Nama_makanan : Nama restoran (index kemiripan dataframe).
+
+Similarity_data : Dataframe mengenai similarity yang telah kita definisikan sebelumnya.
+
+Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah ‘Name’ dan ‘C_Type’.
+
+k : Banyak rekomendasi yang ingin diberikan.
+
+
+Sebelum mulai menulis kodenya, ingatlah kembali definisi sistem rekomendasi yang menyatakan bahwa keluaran sistem ini adalah berupa top-N recommendation. Oleh karena itu, kita akan memberikan sejumlah rekomendasi restoran pada pengguna yang diatur dalam parameter k.
+"""
 
 def food_recommendations(nama_makanan, similarity_data=cosine_sim_df, items=food[['Name', 'C_Type']], k=5):
     """
@@ -329,12 +461,23 @@ def food_recommendations(nama_makanan, similarity_data=cosine_sim_df, items=food
 
     return pd.DataFrame(closest).merge(items).head(k)
 
+"""Dengan menggunakan argpartition, kita mengambil sejumlah nilai k tertinggi dari similarity data (dalam kasus ini: dataframe cosine_sim_df). Kemudian, kita mengambil data dari bobot (tingkat kesamaan) tertinggi ke terendah. Data ini dimasukkan ke dalam variabel closest. Berikutnya, kita perlu menghapus nama_resto yang yang dicari agar tidak muncul dalam daftar rekomendasi. Dalam kasus ini, nanti kita akan mencari resto yang mirip dengan christmas cake, sehingga kita perlu drop nama_makanan christmas cake agar tidak muncul dalam daftar rekomendasi yang diberikan nanti.  """
+
 food[food.Name.eq('christmas cake')]
 
-# Mendapatkan rekomendasi restoran yang mirip dengan KFC
+# Mendapatkan rekomendasi restoran yang mirip dengan chrismas cake
 food_recommendations('christmas cake')
 
-"""## Collaborative Filtering"""
+"""Berikut di atas adalah hasil dari sistem rekomendasi. Karena Christmas cake termasuk dalam dessert maka rekomenasi memunculkan menu dessert.
+
+## 2.4. Collaborative Filtering
+
+Collaborative filtering bergantung pada pendapat komunitas pengguna. Ia tidak memerlukan atribut untuk setiap itemnya seperti pada sistem berbasis konten. Collaborative filtering dibagi lagi menjadi dua kategori, yaitu: model based (metode berbasis model machine learning) dan memory based (metode berbasis memori).
+
+### 2.4.1. Data preparation
+
+Pertama, jangan lupa import semua library yang dibutuhkan. Seperti yang telah kita bahas sebelumnya, impor library di awal merupakan kebiasaan yang umum dilakukan oleh para praktisi data. Hal ini karena praktisi data kadang menggunakan IDE, tools, maupun lingkungan cloud lainnya. Sehingga, library perlu didefinisikan di awal.
+"""
 
 # Import library
 import pandas as pd
@@ -345,8 +488,6 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from pathlib import Path
 import matplotlib.pyplot as plt
-
-"""### Data preparation"""
 
 # menunjukkan data yang akan diolah
 rating.head()
@@ -367,7 +508,10 @@ rating.tail()
 
 rating.head()
 
-"""### Pengembangan Model Collaborative Filter"""
+"""### 2.4.2. Encode Label
+
+Pada tahap ini, Anda perlu melakukan persiapan data untuk menyandikan (encode) fitur ‘User_ID’ dan 'Food_ID' ke dalam indeks integer. Terapkan kode berikut.
+"""
 
 # Mengubah userID menjadi list tanpa nilai yang sama
 user_ids = rating['User_ID'].unique().tolist()
@@ -381,9 +525,9 @@ print('encoded userID : ', user_to_user_encoded)
 user_encoded_to_user = {i: x for i, x in enumerate(user_ids)}
 print('encoded angka ke userID: ', user_encoded_to_user)
 
-"""perhatian"""
+"""Berikut adalah untuk Food_ID"""
 
-# # Mengubah placeID menjadi list tanpa nilai yang sama
+# # Mengubah Food_ID menjadi list tanpa nilai yang sama
 food_ids = rating['Food_ID'].unique().tolist()
 
 # # Proses encoding placeID
@@ -392,9 +536,12 @@ food_to_food_encoded = {x: i for i, x in enumerate(food_ids)}
 # # Proses decoding angka ke placeID
 food_encoded_to_food = {i: x for i, x in enumerate(food_ids)}
 
-"""---"""
+"""---
 
-# Mapping placeID ke dataframe food
+Pemetaan User_ID dan Food_ID ke dataframe yang berkaitan.
+"""
+
+# Mapping Food ID ke dataframe food
 rating['food'] = rating['Food_ID'].map(food_to_food_encoded)
 
 # Cek apakah ada nilai NaN setelah mapping
@@ -433,7 +580,10 @@ rating['food'] = rating['Food_ID'].map(food_to_food_encoded)
 # print("Max value in 'food':", rating['food'].max())
 # assert rating['food'].max() < num_food, "Food ID encoding out of range!"
 
-"""---"""
+"""---
+
+### 2.4.3. Mapping
+"""
 
 # Mapping userID ke dataframe user
 rating['user'] = rating['User_ID'].map(user_to_user_encoded)
@@ -462,14 +612,26 @@ print('Number of User: {}, Number of Food: {}, Min Rating: {}, Max Rating: {}'.f
     num_users, num_food, min_rating, max_rating
 ))
 
-"""### Validasi"""
+"""Tahap persiapan telah selesai. Berikut adalah hal-hal yang telah kita lakukan pada tahap ini:
+
+Memahami data rating yang kita miliki.
+Menyandikan (encode) fitur ‘User_ID’ dan ‘placeID’ ke dalam indeks integer.
+Memetakan ‘User_ID’ dan ‘pl 'Food_ID’ ke dataframe yang berkaitan.
+Mengecek beberapa hal dalam data seperti jumlah user, jumlah makanan, kemudian mengubah nilai rating menjadi float.
+
+### 2.4.4. Validasi
+
+Membuat data random dari data rating
+"""
 
 # Mengacak dataset
 rating = rating.sample(frac=1, random_state=42)
 rating
 
 """---
-TAMBAHAN
+### 2.4.5. Split data
+
+kita bagi data train dan validasi dengan komposisi 80:20. Namun sebelumnya, kita perlu memetakan (mapping) data user dan makanan menjadi satu value terlebih dahulu. Lalu, buatlah rating dalam skala 0 sampai 1 agar mudah dalam melakukan proses training.
 """
 
 # Membuat ulang x dan y
@@ -508,7 +670,12 @@ print("Invalid Food IDs in x_train:", invalid_food_ids)
 
 # print(x, y)
 
-"""### training"""
+"""###  2.4.6. Training
+
+Pada tahap ini, model menghitung skor kecocokan antara pengguna dan makanan dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan resto. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan food. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan food. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid.
+
+Di sini, kita membuat class RecommenderNet dengan keras Model class. Kode class RecommenderNet ini terinspirasi dari tutorial dalam situs Keras dengan beberapa adaptasi sesuai kasus yang sedang kita selesaikan. Terapkan kode berikut.
+"""
 
 class RecommenderNet(tf.keras.Model):
 
@@ -545,6 +712,11 @@ class RecommenderNet(tf.keras.Model):
 
     return tf.nn.sigmoid(x) # activation sigmoid
 
+"""# 3. Modeling
+
+Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation.
+"""
+
 model = RecommenderNet(num_users, num_food, 50) # inisialisasi model
 
 # model compile
@@ -553,6 +725,8 @@ model.compile(
     optimizer = keras.optimizers.Adam(learning_rate=0.001),
     metrics=[tf.keras.metrics.RootMeanSquaredError()]
 )
+
+"""Proses training adalah sebagai berikut"""
 
 # Memulai training
 
@@ -564,7 +738,10 @@ history = model.fit(
     validation_data = (x_val, y_val)
 )
 
-"""### Visualisasi Metrik"""
+"""### Visualisasi Metrik
+
+Untuk melihat visualisasi proses training, mari kita plot metrik evaluasi dengan matplotlib. Terapkan kode berikut.
+"""
 
 plt.plot(history.history['root_mean_squared_error'])
 plt.plot(history.history['val_root_mean_squared_error'])
@@ -574,7 +751,12 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 
-"""### Mendapatkan Rekomendasi Resto"""
+"""proses training model cukup smooth dan model konvergen pada epochs sekitar 100. Dari proses ini, kita memperoleh nilai error akhir sebesar sekitar 0.19 dan error pada data validasi di atas 0.34.
+
+## Mendapatkan Rekomendasi makanan
+
+Untuk mendapatkan rekomendasi makanan, pertama kita ambil sampel user secara acak dan definisikan variabel food_not_reviewed yang merupakan daftar resto yang belum pernah dikunjungi oleh pengguna, menentukan daftar resto_not_revies perlu karena Hal ini karena daftar food_not_review inilah yang akan menjadi resto yang kita rekomendasikan.
+"""
 
 food_df = food_rating
 df = rating
@@ -598,6 +780,8 @@ user_encoder = user_to_user_encoded.get(user_id)
 user_food_array = np.hstack(
     ([[user_encoder]] * len(food_not_review), food_not_review)
 )
+
+"""Selanjutnya, untuk memperoleh rekomendasi restoran, gunakan fungsi model.predict() dari library Keras dengan menerapkan kode berikut."""
 
 ratings = model.predict(user_food_array).flatten()
 
@@ -637,3 +821,5 @@ recommended_food = recommended_food.drop_duplicates(subset=['Name', 'C_Type'])
 
 for row in recommended_food.itertuples():
     print(row.Name, ':', row.C_Type)
+
+"""# Evaluasi"""
