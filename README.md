@@ -110,7 +110,7 @@ Dari gambar di atas dapat dimaknai sebagai berikut:
 1. Dari jenis makanan non vegan, kategori makanan tiga terbanyak adalah makanan indian, chinese, dan thai.
 3. Dari jenis makanan vegan, kategori makanan tiga terbanyak adalah makanan dessert, healty food, dan indian.
 
-### 2 Data rating
+### 3.1.2 Data rating
 Berikut adalah gambaran data rating dalam dataset:
 
 ![image](https://github.com/user-attachments/assets/96732922-7ff4-4f6f-b6e0-321fc4fd6449)
@@ -121,7 +121,13 @@ Dari data rating tersebut, terdapat tiga kolom atau variabel. yaitu
 2. Food_ID. Data ini berisi kode atau ID makanan yang ada dalam set
 3. Rating. Berisi peringkat yang diberikan oleh konsumen terhadap makanan yang ada.
 
-Deskripsi data rating adalah sebagai berikut:
+Info data menunjukkan bahwa:
+1. Jumlah user ID:  101
+2. Jumlah food ID:  310
+3. Jumlah data rating:  512
+Informasi di atas menunjukkan bahwa terdapat 512 data, namun ada 1 data yang memiliki nilai 0.
+
+Deskripsi statistik data rating adalah sebagai berikut:
 
 ![image](https://github.com/user-attachments/assets/a4335dcd-197b-469a-90f5-5e9e9dabea22)
 
@@ -129,6 +135,16 @@ Poin utama dalam data tersebut adalah pada bagian rating, yang dapat dimaknai se
 1. Rata-rata nilai rating pada makanan adalah 5,4. Nilai ini adalah nilai tengah dimana rating nilai adalah 1 sampai 10.
 2. Nilai terendah yang diberikan oleh konsumen pada makana adalah 1
 3. Nilai tertinggi yang diberikan oleh konsumen adalah 10.
+
+## 3.2. Gabungan data food dan rating
+
+Menggambungkan dua data set, yaitu data food dan data rating. penggambungan data ini didasarkan pada Food_ID, supaya hasilnya diurutkan berdasarkan Food_ID.
+
+![image](https://github.com/user-attachments/assets/6cdbaf4d-ae50-485d-a2e1-5d7abee0739c)
+
+Hasilnya adalah sebagai sebagai berikut
+
+![image](https://github.com/user-attachments/assets/3feb02fe-9677-4371-b501-58bfb532b6a4)
 
 Untuk dapat melihat rating makanan, maka data dapat dikelompokkan berdasarkan jenis manakan dan ratingnya. Kaitan antara jenis makanan dan rating dapat dilihat pada gambar berikut
 
@@ -148,16 +164,6 @@ Dari rating jemis makan tersebut dapat dimaknai sebagai berikut:
 Kesimpulan dari data ini:
 
 Makanan Indian merupakan jenis makanan yang paling banyak dipesan konsumen. Jenis makanan ini juga merupakan jenis kelompok yang mendapatkan penilaian tertinggi dan terendah paling banyak dari konsumen. 
-
-## 3.2. GAbungan data food dan rating
-
-Menggambungkan dua data set, yaitu data food dan data rating. penggambungan data ini didasarkan pada Food_ID, supaya hasilnya diurutkan berdasarkan Food_ID.
-
-![image](https://github.com/user-attachments/assets/6cdbaf4d-ae50-485d-a2e1-5d7abee0739c)
-
-Hasilnya adalah sebagai sebagai berikut
-
-![image](https://github.com/user-attachments/assets/3feb02fe-9677-4371-b501-58bfb532b6a4)
 
 ## 3.3. Cek Dataset 
 Tahapan ini dilakukan untuk melihat kondisi data:
@@ -189,15 +195,16 @@ Hasilnya duplikasi data adalah 0. Hal ini, menunjukkan tidak ada data yang dupli
 
 
 # 4. Data Preparation
-Tahapan data preprocessing dilakukan untuk mempersiapkan data yang akan diolah. tahapan dilakukan dengan:
+Tahapan data preprocessing dilakukan untuk mempersiapkan data yang akan diolah. 
 
 ## 4.1. Handling Missing value
+Pada tahap ini dilakukan membersihkan data dari nilai-nilai yang hilang, duplikat. Langkah ini penting untuk memastikan kualitas data yang akan dianalisis lebih lanjut. Hasil pemahaman data menunjukkan bahwa masalah data adalah hanya data NAN, yang terdapat pada kolom rating dan user id. Oleh karena itu, langkah perbaikan data dilakukan dengan menghapus data NAN.
 
 Data yang kosong atau NAN  dihapus dengan kode berikut:
 
 ![image](https://github.com/user-attachments/assets/e4377a1a-749e-4ded-b671-09e6518a1fac)
 
-Setelah data NAN dihapus, maka terdapat 511 data yang bisa diolah.
+Setelah data NA dihapus, maka terdapat 511 data yang bisa diolah.
 
 ## 4.2. Content Based Filtering
 
@@ -207,6 +214,8 @@ Model pertama yang dibuat untuk sistem rekomendasi adalah membuat model dengan p
 3. Membuat rekomendasi
 
 ### 4.2.1. Vektorisasi: TF-IDF Vectorizer
+
+Pada tahap ini, kita akan membangun sistem rekomendasi sederhana berdasarkan jenis masakan yang disediakan restoran. Teknik ini juga akan digunakan pada sistem rekomendasi untuk menemukan representasi fitur penting dari setiap kategori masakan.
 
 a. Vektorisasi dilakukan berdasarkan jenis makanan dari data C_Type. 
 
@@ -248,7 +257,7 @@ Hasil matrik tersebut menunjukan adanya nilai 1 antar dua data, angka tersebut m
 
 ### 4.2.2. Cosine similarity
 
-Coseine Similarity dilakukan untuk...
+Pada tahap sebelumnya, kita telah berhasil mengidentifikasi korelasi antara restoran dengan kategori masakannya. Sekarang, kita akan menghitung derajat kesamaan (similarity degree) antar restoran dengan teknik cosine similarity. Di sini, kita menggunakan fungsi cosine_similarity dari library sklearn.
 
 ![image](https://github.com/user-attachments/assets/c8397199-c7a5-41ee-970c-58d2b6318538)
 
@@ -257,6 +266,18 @@ Coseine Similarity dilakukan untuk...
 
 
 ### 4.2.3. Mendapatkan rekomendasi
+Sebelumnya, kita telah memiliki data similarity (kesamaan) antar makanan. selanjutnya adalah menhasilkan sejumlah makanan yang akan direkomendasikan kepada pengguna. Di sini, kita membuat fungsi resto_recommendations dengan beberapa parameter sebagai berikut:
+
+Nama_makanan : Nama restoran (index kemiripan dataframe).
+
+Similarity_data : Dataframe mengenai similarity yang telah kita definisikan sebelumnya.
+
+Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah ‘Name’ dan ‘C_Type’.
+
+k : Banyak rekomendasi yang ingin diberikan.
+
+Sebelum mulai menulis kodenya, ingatlah kembali definisi sistem rekomendasi yang menyatakan bahwa keluaran sistem ini adalah berupa top-N recommendation. Oleh karena itu, kita akan memberikan sejumlah rekomendasi restoran pada pengguna yang diatur dalam parameter k.
+
 Untuk mendapatkan rekomendasi berbasis konten, maka perlu membuat fungsi terlebih dahulu, berikut adalah:
 
 def food_recommendations(nama_makanan, similarity_data=cosine_sim_df, items=food[['Name', 'C_Type']], k=5):
@@ -303,6 +324,7 @@ Pertama kita akan mencoba melihat data. Sebagai contoh kita mengambil data denga
 
 food[food.Name.eq('christmas cake')]
 
+Dengan menggunakan argpartition, kita mengambil sejumlah nilai k tertinggi dari similarity data (dalam kasus ini: dataframe cosine_sim_df). Kemudian, kita mengambil data dari bobot (tingkat kesamaan) tertinggi ke terendah. Data ini dimasukkan ke dalam variabel closest. Berikutnya, kita perlu menghapus nama_resto yang yang dicari agar tidak muncul dalam daftar rekomendasi. Dalam kasus ini, nanti kita akan mencari resto yang mirip dengan christmas cake, sehingga kita perlu drop nama_makanan christmas cake agar tidak muncul dalam daftar rekomendasi yang diberikan nanti.
 hasilnya adalah:
 
 ![image](https://github.com/user-attachments/assets/b26bb49b-5520-4abe-8b71-24a55b1df05f)
@@ -323,6 +345,8 @@ Hasilnya adalah makanan yang mirip dengan chrismas cake adalah:
 Semua rekomendasi tersebut adalah masuk dalam kategori dessert yang sama dengan yang kategori chrismas cake
 
 ## 4.3. Collaborative Filtering
+Collaborative filtering bergantung pada pendapat komunitas pengguna. Ia tidak memerlukan atribut untuk setiap itemnya seperti pada sistem berbasis konten. Collaborative filtering dibagi lagi menjadi dua kategori, yaitu: model based (metode berbasis model machine learning) dan memory based (metode berbasis memori).
+
 Untuk melakukan sistem rekomendasi dengan Collaborative Filtering, kita akan mempersiapkan  data rating. Langkah untuk melakukan collaborative filtering adalah
 1. Encode label
 2. validasi
@@ -331,6 +355,8 @@ Untuk melakukan sistem rekomendasi dengan Collaborative Filtering, kita akan mem
 5. rekomendasi makanan
 
 ### 4.3.1. Encode label
+Pada tahap ini, Anda perlu melakukan persiapan data untuk menyandikan (encode) fitur ‘User_ID’ dan 'Food_ID' ke dalam indeks integer. Terapkan kode berikut.
+
 **1. langkah pertama adalah ini dilakukan dengna membuat kode untuk melakukan encoded pada data rating.** 
 Kodenya adalah sebagai berikut
 
