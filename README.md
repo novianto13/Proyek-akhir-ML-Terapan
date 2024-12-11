@@ -534,12 +534,13 @@ Pertama kita perlu membuat fungsi terselebih dahulu denga kode berikut:
 
 # 5. Modeling
 
-Kode ini mendefinisikan sebuah model rekomendasi menggunakan TensorFlow dan Keras. Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, dan kemudian menghitung skor kecocokan antara pengguna dan makanan.
-Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, kemudian menghitung skor kecocokan antara pengguna dan makanan dengan menambahkan dot product dari embedding dan bias masing-masing. Fungsi aktivasi sigmoid digunakan untuk menghasilkan output akhir.
-
 Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation.
 
 ![image](https://github.com/user-attachments/assets/19539b93-917c-40b1-8752-1e7c8fea6708)
+
+Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, kemudian menghitung skor kecocokan antara pengguna dan makanan dengan menambahkan dot product dari embedding dan bias masing-masing. Fungsi aktivasi sigmoid digunakan untuk menghasilkan output akhir.
+
+Kode ini mendefinisikan sebuah model rekomendasi menggunakan TensorFlow dan Keras. Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, dan kemudian menghitung skor kecocokan antara pengguna dan makanan.
 
 Kode ini bertujuan untuk menginisialisasi dan meng-compile model rekomendasi (RecommenderNet) dengan parameter yang telah ditentukan. Proses ini mempersiapkan model untuk dilatih dengan data. Tahap ini terdiri dari:
 1. Inisiasi model
@@ -657,27 +658,15 @@ Saat sistem merekomendasikan makanan yang memiliki reting tinggi yaitu: almond p
 # 6. Evaluasi
 Sistem rekomendasi ini bertujuan untuk memberikan saran makanan yang relevan bagi pengguna (user) berdasarkan preferensi mereka di masa lalu dan pola perilaku pengguna lainnya. Ini dicapai melalui pendekatan berbasis collaborative filtering atau neural network, di mana sistem mempelajari hubungan antara pengguna dan makanan berdasarkan data historis.
 
-Proses Utama dari sistem rekoemndasi ini adalah berikut:
-1. Proses keseluruhan terdiri dari beberapa langkah penting:
-Pengumpulan Data: Data rating makanan oleh pengguna digunakan sebagai input utama. Data ini mencakup user ID, food ID, rating, deskripsi makanan, dan jenis makanan.
+Dengan membuat sistem rekomendasi ini, makan pengguna dapat terbantu untuk menemukan makan yang sesuai dengan keingian mereka. Dengan demikian sistem rekomendasi ini dapat membantu proses pencarian dengan lebih cepat dengan memberikan rekomendasi berdasarkan jenis makanan dan berdasarkan peringkat makanan.
 
-2. Pemilihan Pengguna dan Makanan:
-Sistem secara acak memilih seorang pengguna (user) untuk dianalisis.
-Menentukan makanan yang telah direview dan makanan yang belum direview oleh pengguna tersebut.
-
-3. Encoding Data: ID pengguna dan makanan diencode ke format numerik agar dapat diproses oleh model.
-Prediksi Rating: Model memprediksi skor/rating untuk makanan yang belum direview oleh pengguna.
-
-4.  Penyaringan Rekomendasi:
-Sistem memilih 10 makanan dengan prediksi rating tertinggi sebagai rekomendasi untuk pengguna. Makanan duplikat dihapus berdasarkan nama dan jenisnya.
-
-**Keunggulan Sistem:**
+**Secara umum sistem ini membantu dapam:**
 1. Personalisasi: Rekomendasi didasarkan pada preferensi unik setiap pengguna.
 2. Efisiensi: Dengan encoding dan prediksi berbasis model, sistem dapat memberikan rekomendasi dengan cepat meskipun ada banyak data.
 3. Eksplorasi Baru: Sistem memperkenalkan makanan baru yang kemungkinan akan disukai pengguna, membantu memperluas pilihan mereka.
 
 **Hasil Akhir:**
-Walaupun ada potensi overfifting, hasil sistem rekomendasi ini berhasil memberikan hasil dari pertanyaan dan tujuan bisnis yang menjadi tujuan dari proyek ini.
+Hasil akhir dari sistem dapat menjawab problem statment pada proyek yaitu:
 
 1. Makanan Favorit Pengguna:
 Sistem menampilkan 5 makanan yang sudah direview oleh pengguna dengan rating tertinggi. Ini mencerminkan preferensi eksplisit pengguna.
@@ -685,6 +674,7 @@ Sistem menampilkan 5 makanan yang sudah direview oleh pengguna dengan rating ter
 2. Rekomendasi Makanan:
 Sistem merekomendasikan 10 makanan baru yang belum direview tetapi diprediksi memiliki rating tinggi oleh model. Rekomendasi ini dirancang untuk memperluas pengalaman pengguna dan mencocokkan preferensi mereka.
 
+Dengan menjawab permasalahan proyek tersebut maka tujuan dari proyek ini yaitu: Pengguna mendapatkan rekomendasi makanan yang relevan dan dipersonalisasi oleh pengguna, dapat tercapai karena pengguan mendapatkan rekomendasi makanan preferensi pelanggan.
 
 **Kesimpulan Akhir:**
 Sistem rekomendasi ini menunjukkan kemampuan untuk memprediksi dan menyarankan makanan secara personal bagi pengguna berdasarkan data historis. Dengan cara ini, pengguna tidak hanya mendapatkan pengalaman yang lebih relevan, tetapi juga diperkenalkan ke opsi baru yang sesuai dengan preferensi mereka. Sistem ini dapat terus ditingkatkan dengan lebih banyak data, teknik regulasi yang lebih baik, atau integrasi metode berbasis konten untuk mengatasi kekurangan dalam skenario cold-start.
