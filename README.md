@@ -1,34 +1,34 @@
 # Proyek-akhir-ML-Terapan
 ### Proyek akhir: Novianto
 
-# Project Overview
-## Latar Belakang Masalah
+# 1. Project Overview
+## 1.1. Latar Belakang Masalah
 Sistem rekomendasi telah menjadi alat penting dalam membantu pengguna membuat keputusan yang tepat dalam berbagai sektor, termasuk e-commerce, streaming, dan makanan. Dalam konteks makanan, pengguna sering dihadapkan dengan banyaknya pilihan makanan yang tersedia, baik di restoran maupun dalam layanan pesan antar. Hal ini dapat menyebabkan kebingungan dan membuat mereka kesulitan memilih makanan yang sesuai dengan preferensi pribadi.
 
 Sistem rekomendasi makanan dirancang untuk memanfaatkan data seperti nama makanan, jenis makanan, deskripsi, dan rating pengguna untuk menawarkan rekomendasi yang relevan dan dipersonalisasi. Dengan memanfaatkan algoritma seperti collaborative filtering, content-based filtering, atau pendekatan hybrid, sistem ini dapat meningkatkan pengalaman pengguna dengan memberikan saran makanan yang paling mungkin mereka nikmati.
 
-### Contoh Kasus
+### 1.2. Contoh Kasus
 Misalnya, pengguna yang menyukai makanan pedas dapat menerima rekomendasi untuk menu lain dengan karakteristik serupa, bahkan dari restoran berbeda. Sebaliknya, seorang vegetarian dapat diarahkan hanya pada pilihan yang sesuai dengan kebutuhannya.
 
-## 2. Pentingnya Proyek 
+## 1.3. Pentingnya Proyek 
 1. Meningkatkan Pengalaman Pengguna: Dengan memberikan rekomendasi yang relevan, pengguna tidak perlu lagi membuang waktu untuk mencari makanan yang mereka sukai. Ini meningkatkan kepuasan mereka dan loyalitas terhadap platform atau restoran.
 2. Meningkatkan Pendapatan Layanan Makanan: Rekomendasi yang akurat dapat mendorong pengguna untuk mencoba lebih banyak item, meningkatkan transaksi, dan menciptakan peluang upselling (misalnya, menyarankan makanan pendamping).
 3. Personalisasi yang Lebih Baik: Penggunaan data historis dan preferensi memungkinkan sistem untuk menyediakan layanan yang dipersonalisasi, yang kini menjadi ekspektasi pengguna di era digital.
 4. Mengurangi Pilihan yang Berlebihan (Choice Overload): Dengan banyaknya opsi makanan yang tersedia, rekomendasi dapat menyederhanakan proses pengambilan keputusan dan mencegah kelelahan keputusan.
 5. Potensi Pengembangan Bisnis: Restoran dan platform makanan dapat menggunakan wawasan dari sistem ini untuk mengidentifikasi tren makanan, merancang menu baru, atau meningkatkan strategi pemasaran.
 
-# Business Understanding
+# 2. Business Understanding
 Dalam konteks makanan, banyak pengguna sering merasa kewalahan dengan banyaknya pilihan yang tersedia. Mereka kesulitan menemukan makanan yang sesuai dengan preferensi mereka, baik karena keterbatasan informasi, waktu, maupun pengalaman. Hal ini menyebabkan pengalaman pengguna yang kurang optimal, penurunan loyalitas, dan potensi kehilangan pendapatan bagi platform makanan atau restoran.
 
-## Problem Statements
+## 2.1. Problem Statements
 1. Makanan apa yang  sesuai dengan preferensi mereka di antara banyaknya pilihan?
 2. Makanan apa yang direkomendasikan berdasarkan rating pengguna?
 
-## Goals
+## 2.2. Goals
 Pengguna mendapatkan rekomendasi makanan yang relevan dan dipersonalisasi oleh pengguna.
 Pengguna mendapatkan rekomendasi data seperti nama makanan, jenis makanan, deskripsi, dan rating untuk memahami preferensi pengguna.
 
-## Solution Approach
+## 2.3. Solution Approach
 1. Content-Based Filtering
 
 Deskripsi: Pendekatan ini menggunakan atribut makanan (seperti jenis makanan, deskripsi, bahan utama) untuk merekomendasikan makanan yang mirip dengan makanan yang telah disukai atau diberi rating tinggi oleh pengguna.
@@ -47,11 +47,13 @@ Keunggulan:
 Tidak bergantung pada atribut makanan.
 Dapat menemukan rekomendasi "non-tradisional" (makanan yang berbeda dari kebiasaan pengguna).
 
-# Data Understanding
-Untuk mencapai tujuannya, sistem rekomendasi ini dibuat dengan menggunakan data yang diambil dari https://www.kaggle.com/datasets/schemersays/food-recommendation-system. Data ini berisi dua data, yaitu makanan dan rating. Berikut ini data makana (food):
+# 3. Data Understanding
+Untuk mencapai tujuannya, sistem rekomendasi ini dibuat dengan menggunakan data yang diambil dari https://www.kaggle.com/datasets/schemersays/food-recommendation-system. 
+Data ini berisi dua data, yaitu makanan dan rating. 
+
+Berikut ini data makanan (food):
 
 ![image](https://github.com/user-attachments/assets/0a245946-19a5-48f2-887f-be0a439a9580)
-
 
 Dengan rincian kolom atau variabel adalah sebagai berikut:
 
@@ -63,6 +65,8 @@ Terdapat 5 kolom atau variabel dalam data makanan. yaitu
 3. C_Type. Data ini berisi kategori atau jenis makanan.
 4. Veg_Non. Data ini menjelaskan kategori makanan yang dikategori vegan atau non vegan.
 5. Describe. Data ini berisi penjelasan rici komposisi makanan atau masakan.
+
+Dari info data menunjukkan bahwa terdapat 400 data dengan satu baris data yang nol atau kosong
 
 Data rating adalah seperti berikut:
 
@@ -78,8 +82,10 @@ Terdapat tiga variabel pada dataset ini, yaitu:
 2. Food_ID. Data ini berisi ID atau kode makanan yang di review
 3. Rating. Data ini berisi nilai peringkat atau review dari konsumen.
 
-### Berikut ini adalah penjelasan data yang digunakan dalam sistem rekomendasi
-### 1. Data food
+Info data menunjukkan bahsa ada 512 data dengan satu data nol.
+
+## 3.1. Berikut ini adalah penjelasan data yang digunakan dalam sistem rekomendasi
+### 3.1.1. Data food
 
 Dari data makanan yang akan ada dapat ditampilakn makanan berdasarkan jenis kategorinya, sebagai berikut:
 
@@ -143,8 +149,7 @@ Kesimpulan dari data ini:
 
 Makanan Indian merupakan jenis makanan yang paling banyak dipesan konsumen. Jenis makanan ini juga merupakan jenis kelompok yang mendapatkan penilaian tertinggi dan terendah paling banyak dari konsumen. 
 
-# Data prepocessing
-Tahapan data preprocessing dilakukan untuk mempersiapkan data yang akan diolah. tahapan dilakukan dengan:
+## 3.2. GAbungan data food dan rating
 
 Menggambungkan dua data set, yaitu data food dan data rating. penggambungan data ini didasarkan pada Food_ID, supaya hasilnya diurutkan berdasarkan Food_ID.
 
@@ -154,12 +159,12 @@ Hasilnya adalah sebagai sebagai berikut
 
 ![image](https://github.com/user-attachments/assets/3feb02fe-9677-4371-b501-58bfb532b6a4)
 
-# Data Preparation
-Tahapan ini merupakan lanjutan dari tahap prepocessing yang dilakukan untuk mempersiapakn data untuk dapat digunakan. Tahap data preperation yang dilakukan adalah pemberisahn data yang meliputi:
+## 3.3. Cek Dataset 
+Tahapan ini dilakukan untuk melihat kondisi data:
 1. cek data kosong
 2. cek data duplikasi
 
-1. Cek data kosong
+**1. Cek data kosong**
 Cek data dilakukan dengan kode sebagia berikut:
 
 ![image](https://github.com/user-attachments/assets/e2155ae7-6440-45a4-957a-f36fa5d5cc04)
@@ -176,27 +181,32 @@ Cek data kosong hasilnya adalah
 
 Dari informasi tersebut maka dapat dimaknai bahwa dapat tidak ada data kosong, namun data yang kosong sudah terisi dengan NAN sebanyak 91. 
 
+**2. Cek data duplikat:**
+
+food_rating.duplicated().sum()
+
+Hasilnya duplikasi data adalah 0. Hal ini, menunjukkan tidak ada data yang duplikat.
+
+
+# 4. Data Preparation
+Tahapan data preprocessing dilakukan untuk mempersiapkan data yang akan diolah. tahapan dilakukan dengan:
+
+## 4.1. Handling Missing value
+
 Data yang kosong atau NAN  dihapus dengan kode berikut:
 
 ![image](https://github.com/user-attachments/assets/e4377a1a-749e-4ded-b671-09e6518a1fac)
 
 Setelah data NAN dihapus, maka terdapat 511 data yang bisa diolah.
 
-2. Cek data duplikat:
-
-food_rating.duplicated().sum()
-
-Hasilnya duplikasi data adalah 0. Hal ini, menunjukkan tidak ada data yang duplikat.
-
-# Modeling
-## Content Based Filtering
+## 4.2. Content Based Filtering
 
 Model pertama yang dibuat untuk sistem rekomendasi adalah membuat model dengan pendekatan Content Based Filtering. Pembuatan model ini dilakukan dengan tahapan:
 1. Vektorisasi: TF-IDF Vectorizer
 2. Cosine Similarity
 3. Membuat rekomendasi
 
-### 1. Vektorisasi: TF-IDF Vectorizer
+### 4.2.1. Vektorisasi: TF-IDF Vectorizer
 
 a. Vektorisasi dilakukan berdasarkan jenis makanan dari data C_Type. 
 
@@ -236,7 +246,7 @@ index=food.Name: Ini menetapkan nama item makanan sebagai label baris (indeks) D
 
 Hasil matrik tersebut menunjukan adanya nilai 1 antar dua data, angka tersebut menunjukkan bahwa kaitan jenis makanan dan nama makannya.
 
-### 2. Cosine similarity
+### 4.2.2. Cosine similarity
 
 Coseine Similarity dilakukan untuk...
 
@@ -246,7 +256,7 @@ Coseine Similarity dilakukan untuk...
 ![image](https://github.com/user-attachments/assets/65a68e59-852c-4181-8fee-fcac0f7ab149)
 
 
-### 3. Mendapatkan rekomendasi
+### 4.2.3. Mendapatkan rekomendasi
 Untuk mendapatkan rekomendasi berbasis konten, maka perlu membuat fungsi terlebih dahulu, berikut adalah:
 
 def food_recommendations(nama_makanan, similarity_data=cosine_sim_df, items=food[['Name', 'C_Type']], k=5):
@@ -312,15 +322,15 @@ Hasilnya adalah makanan yang mirip dengan chrismas cake adalah:
 
 Semua rekomendasi tersebut adalah masuk dalam kategori dessert yang sama dengan yang kategori chrismas cake
 
-## Collaborative Filtering
+## 4.3. Collaborative Filtering
 Untuk melakukan sistem rekomendasi dengan Collaborative Filtering, kita akan mempersiapkan  data rating. Langkah untuk melakukan collaborative filtering adalah
-1. pengembangan model
+1. Encode label
 2. validasi
 3. training data
 4. visualisasi metrik
 5. rekomendasi makanan
 
-### 1. Pengembangan model
+### 4.3.1. Encode label
 **1. langkah pertama adalah ini dilakukan dengna membuat kode untuk melakukan encoded pada data rating.** 
 Kodenya adalah sebagai berikut
 
@@ -416,7 +426,7 @@ Hsilnya adalah
 
 Kode ini membantu dalam mempersiapkan dan memverifikasi data sebelum digunakan dalam analisis atau model pembelajaran mesin. Dengan mengetahui jumlah pengguna dan makanan, serta rentang nilai rating, kita dapat lebih memahami distribusi data yang akan digunakan.
 
-### 2. Validasi
+### 4.3.2. Validasi
 
 untuk validasi maka kita akan mengacak data rating:
 
@@ -436,6 +446,8 @@ Kode ini mempersiapkan data untuk digunakan dalam model pembelajaran mesin denga
 Keterangan:
 
 kode tersebut diawali dengan membuat ulang variabel x dan y dengan kode:
+
+### 4.3.4. Split Data
 
 x = rating[['user', 'food']].values
 y = rating['Rating'].apply(lambda x: (x - min_rating) / (max_rating - min_rating)).values
@@ -458,13 +470,15 @@ Kode ini bertujuan untuk memeriksa apakah ada nilai Food_ID dalam data latih (x_
 
 Kode ini membantu dalam memverifikasi integritas data latih dengan memastikan bahwa semua nilai Food_ID berada dalam rentang yang valid. Jika ada nilai Food_ID yang tidak valid, ini akan ditampilkan sehingga dapat diperbaiki sebelum melanjutkan ke tahap pelatihan model
 
-### 3. Training data
+### 4.3.5. Training data
 
 Pada bagian inim model yang sudah dibuat akan ditrain untuk melihat akurasinya
 
 Pertama kita perlu membuat fungsi terselebih dahulu denga kode berikut:
 
 ![image](https://github.com/user-attachments/assets/457ee661-96e0-4d85-87ca-0f91646a01d5)
+
+# 5. Modeling
 
 Kode ini mendefinisikan sebuah model rekomendasi menggunakan TensorFlow dan Keras. Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, dan kemudian menghitung skor kecocokan antara pengguna dan makanan.
 Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, kemudian menghitung skor kecocokan antara pengguna dan makanan dengan menambahkan dot product dari embedding dan bias masing-masing. Fungsi aktivasi sigmoid digunakan untuk menghasilkan output akhir.
@@ -508,7 +522,7 @@ Secara keseluruhan, berdasarkan gambar:
 Model terus memperbaiki nilai loss dan RMSE pada data pelatihan, namun val_loss dan val_root_mean_squared_error tampak stabil di sekitar 0.74. Perbedaan yang kecil antara RMSE pada data pelatihan dan validasi mengindikasikan model tidak overfitting.
 
 
-### 4. Visualisasi matrik
+## 5.1. Visualisasi matrik
 
 Berikut ini adalah kode untuk melihat hasil training dalam bentuk visualisasi.
 
@@ -542,7 +556,7 @@ Masalah Overfitting: Model menunjukkan overfitting karena perbedaan yang semakin
 2. Tidak cukupnya data untuk melatih model.
 
 
-### 5. Rekomendasi makanan
+## 5.2 Rekomendasi makanan
 
 Tahap rekomendasi ini dimulai dengan membentuk fungsi dari data Food dan rating yang telah disiapkan sebelumnya. Berikut adalah kodenya:
 
@@ -584,7 +598,7 @@ Saat sistem merekomendasikan makanan yang memiliki reting tinggi yaitu: almond p
 10. roasted spring chicken with root veggies : Healthy Food
 
 
-# Kesimpulan Proyek
+# 6. Evaluasi
 Sistem rekomendasi ini bertujuan untuk memberikan saran makanan yang relevan bagi pengguna (user) berdasarkan preferensi mereka di masa lalu dan pola perilaku pengguna lainnya. Ini dicapai melalui pendekatan berbasis collaborative filtering atau neural network, di mana sistem mempelajari hubungan antara pengguna dan makanan berdasarkan data historis.
 
 Proses Utama dari sistem rekoemndasi ini adalah berikut:
