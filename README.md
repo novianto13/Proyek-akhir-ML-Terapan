@@ -66,7 +66,7 @@ Terdapat 5 kolom atau variabel dalam data makanan. yaitu
 4. Veg_Non. Data ini menjelaskan kategori makanan yang dikategori vegan atau non vegan.
 5. Describe. Data ini berisi penjelasan rici komposisi makanan atau masakan.
 
-Dari info data menunjukkan bahwa terdapat 400 data dengan satu baris data yang nol atau kosong
+Dari info data menunjukkan bahwa terdapat 400 data (bari) dengan satu baris data yang nol atau kosong
 
 Data rating adalah seperti berikut:
 
@@ -77,12 +77,12 @@ Data rating meliputi berikut ini
 
 ![image](https://github.com/user-attachments/assets/67ba40ec-9b6d-46dc-a487-2eaf676e48be)
 
-Terdapat tiga variabel pada dataset ini, yaitu:
+Terdapat tiga variabel atau 3 kolom pada dataset ini, yaitu:
 1. User_ID. Data ini berisi ID dari pengguna atau konsumen yang memberikan peringkat makanan.
 2. Food_ID. Data ini berisi ID atau kode makanan yang di review
 3. Rating. Data ini berisi nilai peringkat atau review dari konsumen.
 
-Info data menunjukkan bahsa ada 512 data dengan satu data nol.
+Info data menunjukkan bahsa ada 512 data (baris) dengan satu data nol.
 
 ## 3.1. Berikut ini adalah penjelasan data yang digunakan dalam sistem rekomendasi
 ### 3.1.1. Data food
@@ -515,6 +515,8 @@ Pertama kita perlu membuat fungsi terselebih dahulu denga kode berikut:
 
 Kode ini mendefinisikan sebuah model rekomendasi menggunakan TensorFlow dan Keras. Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, dan kemudian menghitung skor kecocokan antara pengguna dan makanan.
 Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, kemudian menghitung skor kecocokan antara pengguna dan makanan dengan menambahkan dot product dari embedding dan bias masing-masing. Fungsi aktivasi sigmoid digunakan untuk menghasilkan output akhir.
+
+Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation.
 
 ![image](https://github.com/user-attachments/assets/19539b93-917c-40b1-8752-1e7c8fea6708)
 
