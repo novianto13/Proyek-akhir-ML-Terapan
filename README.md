@@ -535,11 +535,15 @@ Semua rekomendasi tersebut adalah masuk dalam kategori dessert yang sama dengan 
 ### 5.2. Modeling Colaborative based filtering
 Pada tahapan modeling dengan Modeling Colaborative based filtering dimulai dengan:
 
-1. training data
-2. visualisasi metrik
-3. rekomendasi makanan
+1. Pembentukan class
+2. Pembentukan model
+3. Rekomendassi top-N
 
-### 5.2.1. Training data
+   
+5. visualisasi metrik
+6. rekomendasi makanan
+
+### 5.2.1. Training data RecommenderNet
 
 Pada tahap ini, model menghitung skor kecocokan antara pengguna dan makanan dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan resto. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan food. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan food. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid.
 
@@ -551,84 +555,19 @@ Pertama kita perlu membuat fungsi terselebih dahulu denga kode berikut:
 
 ![image](https://github.com/user-attachments/assets/457ee661-96e0-4d85-87ca-0f91646a01d5)
 
+### 5.2.2. Pembentukan model
+
 Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation.
 
 ![image](https://github.com/user-attachments/assets/19539b93-917c-40b1-8752-1e7c8fea6708)
 
-Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, kemudian menghitung skor kecocokan antara pengguna dan makanan dengan menambahkan dot product dari embedding dan bias masing-masing. Fungsi aktivasi sigmoid digunakan untuk menghasilkan output akhir.
+Model tersebut menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, kemudian menghitung skor kecocokan antara pengguna dan makanan dengan menambahkan dot product dari embedding dan bias masing-masing. Fungsi aktivasi sigmoid digunakan untuk menghasilkan output akhir.
 
-Kode ini mendefinisikan sebuah model rekomendasi menggunakan TensorFlow dan Keras. Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, dan kemudian menghitung skor kecocokan antara pengguna dan makanan.
-
-Kode ini bertujuan untuk menginisialisasi dan meng-compile model rekomendasi (RecommenderNet) dengan parameter yang telah ditentukan. Proses ini mempersiapkan model untuk dilatih dengan data. Tahap ini terdiri dari:
+Model rekomendasi menggunakan TensorFlow dan Keras. Model ini menggunakan embedding untuk merepresentasikan pengguna dan makanan dalam ruang vektor, dan kemudian menghitung skor kecocokan antara pengguna dan makanan. Kode tersebut di atas bertujuan untuk menginisialisasi dan meng-compile model rekomendasi (RecommenderNet) dengan parameter yang telah ditentukan. Proses ini mempersiapkan model untuk dilatih dengan data. Tahap ini terdiri dari:
 1. Inisiasi model
 2. Compile model
-Kode ini mempersiapkan model rekomendasi untuk dilatih dengan data. Dengan meng-compile model, kita menentukan fungsi loss, optimizer, dan metrik evaluasi yang akan digunakan selama proses pelatihan. Ini adalah langkah penting sebelum memulai pelatihan model.
 
-![image](https://github.com/user-attachments/assets/d857772a-c257-4da4-8397-685c34600fec)
-
-Kode ini bertujuan untuk menginisialisasi dan meng-compile model rekomendasi (RecommenderNet) dengan parameter yang telah ditentukan. Proses ini mempersiapkan model untuk dilatih dengan data.
-Kode ini mempersiapkan model rekomendasi untuk dilatih dengan data. Dengan meng-compile model, kita menentukan fungsi loss, optimizer, dan metrik evaluasi yang akan digunakan selama proses pelatihan. Ini adalah langkah penting sebelum memulai pelatihan model.
-
-Hasilnnya adalah sebagai berikut
-
-![image](https://github.com/user-attachments/assets/828fb7bd-d2a9-4343-8ac2-ed8c6d98f59c)
-
-Berikut adalah keterangannya:
-
-Epoch 97-100: Menunjukkan tahap pelatihan model di epoch ke-97 hingga ke-100 dari total 100 epoch. Setiap epoch mewakili satu kali iterasi lengkap melalui data pelatihan.
-
-Loss: Ini adalah metrik yang dihitung berdasarkan fungsi kehilangan (loss function). Loss mengukur seberapa jauh prediksi model dari nilai sebenarnya dalam data pelatihan. Semakin rendah nilai loss, semakin baik model melakukan pelatihan.
-
-Root Mean Squared Error (RMSE):
-
-Ini adalah akar dari rata-rata kuadrat selisih antara prediksi model dan nilai aktual. RMSE sering digunakan untuk merepresentasikan kesalahan dalam skala yang sama dengan target data.
-root_mean_squared_error adalah nilai RMSE untuk data pelatihan.
-Val_loss dan val_root_mean_squared_error:
-
-Val_loss: Ini adalah nilai loss yang dihitung pada data validasi, yang digunakan untuk mengevaluasi performa model terhadap data yang belum pernah dilihat sebelumnya selama pelatihan.
-val_root_mean_squared_error: Nilai RMSE untuk data validasi. Semakin kecil nilai ini, semakin baik performa model terhadap data validasi.
-uared_error: Ini kemungkinan salah satu metrik tambahan yang Anda definisikan (bisa jadi metrik kustom). Nilainya tampaknya konsisten di sekitar 0.346-0.347, yang bisa menunjukkan metrik khusus lain untuk mengevaluasi model.
-
-Progres Pelatihan (ms/step): Waktu pelatihan per step menunjukkan seberapa cepat setiap batch data diproses. Dalam kasus ini, terlihat bahwa pelatihan berlangsung dengan cukup cepat (2-3 ms per step).
-
-Secara keseluruhan, berdasarkan gambar:
-
-Model terus memperbaiki nilai loss dan RMSE pada data pelatihan, namun val_loss dan val_root_mean_squared_error tampak stabil di sekitar 0.74. Perbedaan yang kecil antara RMSE pada data pelatihan dan validasi mengindikasikan model tidak overfitting.
-
-## 5.1. Visualisasi matrik
-
-Berikut ini adalah kode untuk melihat hasil training dalam bentuk visualisasi.
-
-![image](https://github.com/user-attachments/assets/ef270ce7-773d-4dbe-bde9-a88411d626ce)
-
-Hasilnya
-
-![image](https://github.com/user-attachments/assets/95bb363b-a5d4-40fd-91a6-9b5965d3616f)
-
-Gambar tersebut menunjukkan grafik metrik Root Mean Squared Error (RMSE) terhadap jumlah epoch untuk data pelatihan (train) dan data pengujian (test). Berikut adalah analisis hasil training:
-
-Sumbu X: Merepresentasikan jumlah epoch (dari 0 hingga 100), yaitu jumlah iterasi pelatihan model.
-
-Sumbu Y: Merepresentasikan nilai root mean squared error (RMSE), yang mengukur rata-rata kesalahan antara prediksi model dan nilai sebenarnya.
-
-**Observasi**
-Kurva Pelatihan (Train - Garis Biru):
-
-1. Nilai RMSE untuk data pelatihan terus menurun seiring bertambahnya epoch.
-Ini menunjukkan bahwa model belajar dengan baik dari data pelatihan dan terus memperbaiki performanya.
-2. Tidak ada tanda-tanda stagnasi atau peningkatan RMSE, sehingga pelatihan pada data ini tampak efektif.
-
-Kurva Pengujian (Test - Garis Oranye):
-
-Nilai RMSE untuk data pengujian cenderung meningkat seiring bertambahnya epoch.
-Hal ini menunjukkan bahwa adanya potensi model mengalami overfitting, yaitu model belajar terlalu spesifik pada data pelatihan sehingga kehilangan kemampuan generalisasi terhadap data pengujian.
-
-**Kesimpulan**
-Masalah Overfitting: Model menunjukkan overfitting karena perbedaan yang semakin besar antara RMSE pada data pelatihan dan pengujian. Hal ini dapat disebabkan oleh:
-1. Model terlalu kompleks.
-2. Tidak cukupnya data untuk melatih model.
-
-### 5.2.2. Rekomendasi makanan top-N
+### 5.2.3. Rekomendasi makanan top-N
 
 Tahap rekomendasi ini dimulai dengan membentuk fungsi dari data Food dan rating yang telah disiapkan sebelumnya. Berikut adalah kodenya:
 
@@ -669,8 +608,145 @@ Saat sistem merekomendasikan makanan yang memiliki reting tinggi yaitu: almond p
 10. roasted spring chicken with root veggies : Healthy Food
 
 
-
 # 6. Evaluasi
+
+## 6.1. Evaluasi Content-based Filter
+### 6.1.1.  Evaluasi Content-based Filter dengan Precision@K
+Fungsi ini digunakan untuk menghitung nilai precision@k, yang merupakan metrik evaluasi untuk mengukur seberapa baik model dalam merekomendasikan item yang relevan di antara k rekomendasi teratas.
+
+Parameter:
+1. recommended_list: Daftar item yang direkomendasikan oleh model (dalam bentuk list).
+2. relevant_list: Daftar item yang relevan atau ground truth (dalam bentuk list).
+3. k: Jumlah rekomendasi teratas yang dipertimbangkan (default adalah 5).
+
+Langkah-langkah dalam fungsi:
+1. Ambil top-k rekomendasi
+2. Hitung jumlah rekomendasi yang relevan
+3. Hitung precision@k
+4. Mengembalikan nilai precision@k
+
+Berikut kodennya
+
+![image](https://github.com/user-attachments/assets/51451296-1b62-48de-9339-6ebf5b40ec65)
+
+![image](https://github.com/user-attachments/assets/03230b5a-23ac-4e14-afd8-7e582a6b03ee)
+
+Hasilnya:
+
+Precision@k rata-rata: 0.16116504854368932
+
+Hasil dari evaluasi precision menunjukkan nilai 0.16 atau 16%. Presisi @k sebesar 0,16 berarti bahwa, rata-rata, 16% dari 5 rekomendasi makanan teratas relevan bagi pengguna. Ini bukan presisi yang sangat tinggi.
+evaluasi dengan recall
+
+### 6.1.2.  Evaluasi Content-based Filter dengan recall@K
+
+Hasil evaluasi precision yang hanya 16% akan coba dievaluasi ulang dengan recall. Meningkatkan precision@k sistem rekomendasi ini memerlukan kombinasi praproses data, rekayasa fitur, pemilihan model, penyetelan hiperparameter, dan evaluasi komprehensif.
+
+Rekayasa Fitur: Jelajahi berbagai fitur atau kombinasi fitur (misalnya, bahan, profil rasa, metode memasak) untuk menciptakan representasi item makanan yang lebih baik untuk pemfilteran berbasis konten.
+
+Penyetelan TF-IDF: Bereksperimenlah dengan berbagai parameter TfidfVectorizer (misalnya, min_df, max_df, ngram_range) untuk mengoptimalkan representasi teks deskripsi makanan.
+Metrik Kesamaan: Pertimbangkan untuk menggunakan metrik kesamaan alternatif (misalnya, kesamaan Jaccard, jarak Euclidean) untuk membandingkan item makanan.
+
+Jelajahi Pemfilteran Kolaboratif:
+
+Penyetelan Hiperparameter: Bereksperimenlah dengan berbagai hiperparameter (misalnya, ukuran penyematan, kecepatan pembelajaran, ukuran batch, periode) dari model pemfilteran kolaboratif Anda untuk menemukan pengaturan yang optimal.
+
+Arsitektur Model: Pertimbangkan untuk menggunakan arsitektur model yang lebih kompleks, seperti model pemfilteran kolaboratif berbasis pembelajaran mendalam. Pendekatan Hibrida:
+
+Gabungkan Penyaringan Berbasis Konten dan Kolaboratif: Terapkan pendekatan hibrida yang memanfaatkan penyaringan berbasis konten dan kolaboratif untuk menghasilkan rekomendasi yang lebih akurat dan beragam. Misalnya, Anda dapat menggunakan penyaringan berbasis konten untuk menghasilkan serangkaian rekomendasi awal, lalu menggunakan penyaringan kolaboratif untuk menyempurnakan rekomendasi ini berdasarkan preferensi pengguna yang serupa.
+
+Atasi Kelangkaan Data:
+
+Penambahan Data: Jika kumpulan data Anda memiliki peringkat terbatas, pertimbangkan untuk menggunakan teknik seperti penambahan data untuk meningkatkan kepadatan matriks peringkat Anda. Ini dapat meningkatkan kinerja model penyaringan kolaboratif.
+Umpan Balik Implisit: Gabungkan data umpan balik implisit, seperti riwayat penelusuran atau riwayat pembelian, untuk menangkap preferensi pengguna secara lebih komprehensif.
+
+Metrik Evaluasi:
+
+Di Luar Presisi@k: Pertimbangkan untuk menggunakan metrik evaluasi tambahan, seperti recall@k, F1-score@k, atau Mean Average Precision (MAP), untuk mendapatkan gambaran yang lebih lengkap tentang kinerja sistem rekomendasi Anda.
+
+Codenya adalah sebagai berikut:
+
+![image](https://github.com/user-attachments/assets/66c4452c-7fd4-4a6d-9be8-8a56b0305645)
+
+![image](https://github.com/user-attachments/assets/6b1b6c86-3440-455d-a8cd-755580089228)
+
+Hasilnya:
+
+Recall@k rata-rata: 0.6749730312837109
+
+Hasil dari evaluasi racall setelah perbaikan menjadi 0.67 atau 67%. dengan demikian rekomendasi tingkat akurasi content based filter adalah 67% dari makanan yang direkomendasikan.
+
+## 6.2. Evaluasi Collaborative-based Filter
+
+### 6.2.1. Training model
+Untuk training model kode berikug ini mempersiapkan model rekomendasi untuk dilatih dengan data. Dengan meng-compile model, kita menentukan fungsi loss, optimizer, dan metrik evaluasi yang akan digunakan selama proses pelatihan. Ini adalah langkah penting sebelum memulai pelatihan model.
+
+![image](https://github.com/user-attachments/assets/d857772a-c257-4da4-8397-685c34600fec)
+
+Kode ini bertujuan untuk menginisialisasi dan meng-compile model rekomendasi (RecommenderNet) dengan parameter yang telah ditentukan. Proses ini mempersiapkan model untuk dilatih dengan data.
+Kode ini mempersiapkan model rekomendasi untuk dilatih dengan data. Dengan meng-compile model, kita menentukan fungsi loss, optimizer, dan metrik evaluasi yang akan digunakan selama proses pelatihan. Ini adalah langkah penting sebelum memulai pelatihan model.
+
+Hasilnnya adalah sebagai berikut
+
+![image](https://github.com/user-attachments/assets/828fb7bd-d2a9-4343-8ac2-ed8c6d98f59c)
+
+Berikut adalah keterangannya:
+
+Epoch 97-100: Menunjukkan tahap pelatihan model di epoch ke-97 hingga ke-100 dari total 100 epoch. Setiap epoch mewakili satu kali iterasi lengkap melalui data pelatihan.
+
+Loss: Ini adalah metrik yang dihitung berdasarkan fungsi kehilangan (loss function). Loss mengukur seberapa jauh prediksi model dari nilai sebenarnya dalam data pelatihan. Semakin rendah nilai loss, semakin baik model melakukan pelatihan.
+
+Root Mean Squared Error (RMSE):
+
+Ini adalah akar dari rata-rata kuadrat selisih antara prediksi model dan nilai aktual. RMSE sering digunakan untuk merepresentasikan kesalahan dalam skala yang sama dengan target data.
+root_mean_squared_error adalah nilai RMSE untuk data pelatihan.
+Val_loss dan val_root_mean_squared_error:
+
+Val_loss: Ini adalah nilai loss yang dihitung pada data validasi, yang digunakan untuk mengevaluasi performa model terhadap data yang belum pernah dilihat sebelumnya selama pelatihan.
+val_root_mean_squared_error: Nilai RMSE untuk data validasi. Semakin kecil nilai ini, semakin baik performa model terhadap data validasi.
+uared_error: Ini kemungkinan salah satu metrik tambahan yang Anda definisikan (bisa jadi metrik kustom). Nilainya tampaknya konsisten di sekitar 0.346-0.347, yang bisa menunjukkan metrik khusus lain untuk mengevaluasi model.
+
+Progres Pelatihan (ms/step): Waktu pelatihan per step menunjukkan seberapa cepat setiap batch data diproses. Dalam kasus ini, terlihat bahwa pelatihan berlangsung dengan cukup cepat (2-3 ms per step).
+
+Secara keseluruhan, berdasarkan gambar:
+
+Model terus memperbaiki nilai loss dan RMSE pada data pelatihan, namun val_loss dan val_root_mean_squared_error tampak stabil di sekitar 0.74. Perbedaan yang kecil antara RMSE pada data pelatihan dan validasi mengindikasikan model tidak overfitting.
+
+## 5.2.1. Visualisasi matrik
+
+Berikut ini adalah kode untuk melihat hasil training dalam bentuk visualisasi.
+
+![image](https://github.com/user-attachments/assets/ef270ce7-773d-4dbe-bde9-a88411d626ce)
+
+Hasilnya
+
+![image](https://github.com/user-attachments/assets/95bb363b-a5d4-40fd-91a6-9b5965d3616f)
+
+Gambar tersebut menunjukkan grafik metrik Root Mean Squared Error (RMSE) terhadap jumlah epoch untuk data pelatihan (train) dan data pengujian (test). Berikut adalah analisis hasil training:
+
+Sumbu X: Merepresentasikan jumlah epoch (dari 0 hingga 100), yaitu jumlah iterasi pelatihan model.
+
+Sumbu Y: Merepresentasikan nilai root mean squared error (RMSE), yang mengukur rata-rata kesalahan antara prediksi model dan nilai sebenarnya.
+
+**Observasi**
+Kurva Pelatihan (Train - Garis Biru):
+
+1. Nilai RMSE untuk data pelatihan terus menurun seiring bertambahnya epoch.
+Ini menunjukkan bahwa model belajar dengan baik dari data pelatihan dan terus memperbaiki performanya.
+2. Tidak ada tanda-tanda stagnasi atau peningkatan RMSE, sehingga pelatihan pada data ini tampak efektif.
+
+Kurva Pengujian (Test - Garis Oranye):
+
+Nilai RMSE untuk data pengujian cenderung meningkat seiring bertambahnya epoch.
+Hal ini menunjukkan bahwa adanya potensi model mengalami overfitting, yaitu model belajar terlalu spesifik pada data pelatihan sehingga kehilangan kemampuan generalisasi terhadap data pengujian.
+
+**Kesimpulan**
+Masalah Overfitting: Model menunjukkan overfitting karena perbedaan yang semakin besar antara RMSE pada data pelatihan dan pengujian. Hal ini dapat disebabkan oleh:
+1. Model terlalu kompleks.
+2. Tidak cukupnya data untuk melatih model.
+
+
+## 6.3. Kesimpulan
 Sistem rekomendasi ini bertujuan untuk memberikan saran makanan yang relevan bagi pengguna (user) berdasarkan preferensi mereka di masa lalu dan pola perilaku pengguna lainnya. Ini dicapai melalui pendekatan berbasis collaborative filtering atau neural network, di mana sistem mempelajari hubungan antara pengguna dan makanan berdasarkan data historis.
 
 Dengan membuat sistem rekomendasi ini, makan pengguna dapat terbantu untuk menemukan makan yang sesuai dengan keingian mereka. Dengan demikian sistem rekomendasi ini dapat membantu proses pencarian dengan lebih cepat dengan memberikan rekomendasi berdasarkan jenis makanan dan berdasarkan peringkat makanan.
