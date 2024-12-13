@@ -136,36 +136,7 @@ Poin utama dalam data tersebut adalah pada bagian rating, yang dapat dimaknai se
 2. Nilai terendah yang diberikan oleh konsumen pada makana adalah 1
 3. Nilai tertinggi yang diberikan oleh konsumen adalah 10.
 
-## 3.2. Gabungan data food dan rating
-
-Menggambungkan dua data set, yaitu data food dan data rating. penggambungan data ini didasarkan pada Food_ID, supaya hasilnya diurutkan berdasarkan Food_ID.
-
-![image](https://github.com/user-attachments/assets/6cdbaf4d-ae50-485d-a2e1-5d7abee0739c)
-
-Hasilnya adalah sebagai sebagai berikut
-
-![image](https://github.com/user-attachments/assets/3feb02fe-9677-4371-b501-58bfb532b6a4)
-
-Untuk dapat melihat rating makanan, maka data dapat dikelompokkan berdasarkan jenis manakan dan ratingnya. Kaitan antara jenis makanan dan rating dapat dilihat pada gambar berikut
-
-![image](https://github.com/user-attachments/assets/1e488f5e-4acf-419c-9bd2-6d701ad9c9ff)
-
-![image](https://github.com/user-attachments/assets/c6e8a52c-3062-42ee-a4d7-1415fac8cd2f)
-
-Gambar tersebut diperoleh dari tabel berikut ini:
-
-![image](https://github.com/user-attachments/assets/affcd1cb-d358-4f8c-8e8d-aba80c260b46)
-
-Dari rating jemis makan tersebut dapat dimaknai sebagai berikut:
-1. Total konsumen yang memberikan review ada 511 konsumen yang memberikan rating (dari total data 602).
-2. Konsumen yang memberikan review 3 terbanyak adalah rating 3 (63 konsumen), kemudian rating 5 dan rating 10 yang masing-masing 61 konsumen. Kondisi ini menunjukkan orang 
-3. Banyaknya makanan yang review adalah makanan indian, dan sekaligus makanan yang mendapatkan jumlah rating 10 terbanyak dibandingkan makanan lainnya, yaitu 14 konsumen dari 61 konsumen yang memberikan rating 10. Sekaligus jenis makanan yang paling banyak mendapatkan nilai terendah dari konsumen, yaitu 12 konsumen dari total 48 konnsumen yang memberikan nilai rating 1.
-
-Kesimpulan dari data ini:
-
-Makanan Indian merupakan jenis makanan yang paling banyak dipesan konsumen. Jenis makanan ini juga merupakan jenis kelompok yang mendapatkan penilaian tertinggi dan terendah paling banyak dari konsumen. 
-
-## 3.3. Cek Dataset 
+## 3.2. Cek Dataset 
 Tahapan ini dilakukan untuk melihat kondisi data:
 1. cek data kosong
 2. cek data duplikasi
@@ -195,9 +166,49 @@ Hasilnya duplikasi data adalah 0. Hal ini, menunjukkan tidak ada data yang dupli
 
 
 # 4. Data Preparation
-Tahapan data preprocessing dilakukan untuk mempersiapkan data yang akan diolah. 
+Tahapan data preprocessing dilakukan untuk mempersiapkan data yang akan diolah.
 
-## 4.1. Handling Missing value
+## 4.1. Gabungan data food dan rating
+
+Data yang digunakan dalam sistem rekomendasi ini ada dua, yaitu data food dan rating, oleh karena itu kedua data tersebut akan digabung. Penggambungan data ini didasarkan pada Food_ID, supaya hasilnya diurutkan berdasarkan Food_ID.
+
+![image](https://github.com/user-attachments/assets/6cdbaf4d-ae50-485d-a2e1-5d7abee0739c)
+
+Hasilnya adalah sebagai sebagai berikut
+
+![image](https://github.com/user-attachments/assets/3feb02fe-9677-4371-b501-58bfb532b6a4)
+
+Untuk dapat melihat rating makanan, maka data dapat dikelompokkan berdasarkan jenis manakan dan ratingnya. Kaitan antara jenis makanan dan rating dapat dilihat pada gambar berikut
+
+![image](https://github.com/user-attachments/assets/1e488f5e-4acf-419c-9bd2-6d701ad9c9ff)
+
+![image](https://github.com/user-attachments/assets/c6e8a52c-3062-42ee-a4d7-1415fac8cd2f)
+
+Gambar tersebut diperoleh dari tabel berikut ini:
+
+![image](https://github.com/user-attachments/assets/affcd1cb-d358-4f8c-8e8d-aba80c260b46)
+
+Dari rating jemis makan tersebut dapat dimaknai sebagai berikut:
+1. Total konsumen yang memberikan review ada 511 konsumen yang memberikan rating (dari total data 602).
+2. Konsumen yang memberikan review 3 terbanyak adalah rating 3 (63 konsumen), kemudian rating 5 dan rating 10 yang masing-masing 61 konsumen. Kondisi ini menunjukkan orang 
+3. Banyaknya makanan yang review adalah makanan indian, dan sekaligus makanan yang mendapatkan jumlah rating 10 terbanyak dibandingkan makanan lainnya, yaitu 14 konsumen dari 61 konsumen yang memberikan rating 10. Sekaligus jenis makanan yang paling banyak mendapatkan nilai terendah dari konsumen, yaitu 12 konsumen dari total 48 konnsumen yang memberikan nilai rating 1.
+
+Kesimpulan dari data ini:
+
+Makanan Indian merupakan jenis makanan yang paling banyak dipesan konsumen. Jenis makanan ini juga merupakan jenis kelompok yang mendapatkan penilaian tertinggi dan terendah paling banyak dari konsumen. 
+
+## 4.2. Penataan kolom dataset gabungan
+Setelah data food dan rating digabung dalam dataset food_rating maka data akan diurutkan berdasarkan userID. oleh karena itu kolom User ID akan dipindah ke kolom palong kiri dengan kode berikut:
+
+![image](https://github.com/user-attachments/assets/3af5c497-3a1c-4552-9692-8d73c39908e9)
+
+## 4.3. Perbaikan tipe data
+
+Data info menunjukkan terdapat data tipe float64 untuk user ID dan rating. Untuk dapat mengolah dengan baik, maka tipe data tersebut dirubah menjadi  int64 dengan kode, dan hasilnya:
+
+![image](https://github.com/user-attachments/assets/b3f54392-1d27-4e52-bdcf-9c89d4162bfc)
+
+## 4.4. Handling Missing value
 Pada tahap ini dilakukan membersihkan data dari nilai-nilai yang hilang, duplikat. Langkah ini penting untuk memastikan kualitas data yang akan dianalisis lebih lanjut. Hasil pemahaman data menunjukkan bahwa masalah data adalah hanya data NAN, yang terdapat pada kolom rating dan user id. Oleh karena itu, langkah perbaikan data dilakukan dengan menghapus data NAN.
 
 Data yang kosong atau NAN  dihapus dengan kode berikut:
@@ -206,14 +217,12 @@ Data yang kosong atau NAN  dihapus dengan kode berikut:
 
 Setelah data NA dihapus, maka terdapat 511 data yang bisa diolah.
 
-## 4.2. Content Based Filtering
+## 4.5. Data preparation untuk Content Based Filtering
 
 Model pertama yang dibuat untuk sistem rekomendasi adalah membuat model dengan pendekatan Content Based Filtering. Pembuatan model ini dilakukan dengan tahapan:
 1. Vektorisasi: TF-IDF Vectorizer
-2. Cosine Similarity
-3. Membuat rekomendasi
 
-### 4.2.1. Vektorisasi: TF-IDF Vectorizer
+### 4.5.1. Vektorisasi: TF-IDF Vectorizer
 
 Pada tahap ini, kita akan membangun sistem rekomendasi sederhana berdasarkan jenis masakan yang disediakan restoran. Teknik ini juga akan digunakan pada sistem rekomendasi untuk menemukan representasi fitur penting dari setiap kategori masakan.
 
@@ -256,114 +265,12 @@ index=food.Name: Ini menetapkan nama item makanan sebagai label baris (indeks) D
 
 Hasil matrik tersebut menunjukan adanya nilai 1 antar dua data, angka tersebut menunjukkan bahwa kaitan jenis makanan dan nama makannya.
 
-### 4.2.2. Cosine similarity
-
-Pada tahap sebelumnya, kita telah berhasil mengidentifikasi korelasi antara restoran dengan kategori masakannya. Sekarang, kita akan menghitung derajat kesamaan (similarity degree) antar restoran dengan teknik cosine similarity. Di sini, kita menggunakan fungsi cosine_similarity dari library sklearn.
-
-![image](https://github.com/user-attachments/assets/c8397199-c7a5-41ee-970c-58d2b6318538)
-
-Kode ini bertujuan untuk menghitung cosine similarity antara dokumen-dokumen yang diwakili dalam bentuk matriks TF-IDF (Term Frequency-Inverse Document Frequency). Cosine similarity adalah ukuran kesamaan antara dua vektor yang mengukur sudut kosinus di antara mereka. Berikut penjelasannya:
-
-1. cosine_similarity(tfidf_matrix): Fungsi ini menghitung cosine similarity antara semua pasangan dokumen dalam matriks TF-IDF yang diberikan. Matriks TF-IDF adalah representasi numerik dari dokumen-dokumen yang menunjukkan seberapa penting suatu kata dalam dokumen tertentu relatif terhadap seluruh kumpulan dokumen.
-2. cosine_sim: Variabel ini menyimpan hasil dari perhitungan cosine similarity. Hasilnya adalah matriks dua dimensi di mana setiap elemen (i, j) menunjukkan kesamaan antara dokumen i dan dokumen j.
-
-Selanjutnya kode berikut ini bertujuan untuk membuat dataframe dari variabel cosine_sim dengan baris dan kolom yang diberi nama sesuai dengan nama restoran. Ini memungkinkan kita untuk melihat kesamaan antara setiap pasangan restoran berdasarkan matriks cosine similarity yang telah dihitung sebelumnya.
-
-![image](https://github.com/user-attachments/assets/65a68e59-852c-4181-8fee-fcac0f7ab149)
-
-erikut penjelasannya:
-1. pd.DataFrame(cosine_sim, index=food['Name'], columns=food['Name']): Membuat dataframe dari matriks cosine similarity (cosine_sim). Baris dan kolom dataframe ini diberi label menggunakan nama restoran yang diambil dari kolom 'Name' dalam dataframe food.
-2. print('Shape:', cosine_sim_df.shape): Mencetak bentuk (dimensi) dari dataframe cosine_sim_df.
-3. cosine_sim_df.sample(5, axis=1).sample(10, axis=0): Menampilkan sampel acak dari 5 kolom dan 10 baris dari dataframe cosine_sim_df. Ini membantu untuk melihat sebagian kecil dari matriks kesamaan secara acak.
-
-### 4.2.3. Mendapatkan rekomendasi
-Sebelumnya, kita telah memiliki data similarity (kesamaan) antar makanan. selanjutnya adalah menhasilkan sejumlah makanan yang akan direkomendasikan kepada pengguna. Di sini, kita membuat fungsi resto_recommendations dengan beberapa parameter sebagai berikut:
-
-Nama_makanan : Nama restoran (index kemiripan dataframe).
-
-Similarity_data : Dataframe mengenai similarity yang telah kita definisikan sebelumnya.
-
-Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah ‘Name’ dan ‘C_Type’.
-
-k : Banyak rekomendasi yang ingin diberikan.
-
-Sebelum mulai menulis kodenya, ingatlah kembali definisi sistem rekomendasi yang menyatakan bahwa keluaran sistem ini adalah berupa top-N recommendation. Oleh karena itu, kita akan memberikan sejumlah rekomendasi restoran pada pengguna yang diatur dalam parameter k.
-
-Untuk mendapatkan rekomendasi berbasis konten, maka perlu membuat fungsi terlebih dahulu, berikut adalah:
-
-def food_recommendations(nama_makanan, similarity_data=cosine_sim_df, items=food[['Name', 'C_Type']], k=5):
-
-index = similarity_data.loc[:,nama_makanan].to_numpy().argpartition(
-        range(-1, -k, -1))
-
- closest = similarity_data.columns[index[-1:-(k+2):-1]]
-
-closest = closest.drop(nama_makanan, errors='ignore')
-
-return pd.DataFrame(closest).merge(items).head(k)
-
-
-Keterangan:
-Fungsi ini bertujuan untuk memberikan rekomendasi restoran berdasarkan kemiripan dengan restoran yang diberikan.
-
-Parameter:
-nama_makanan: Tipe data string (str). Nama restoran yang akan dijadikan acuan untuk mencari kemiripan.
-
-similarity_data: Tipe data pd.DataFrame. Dataframe yang berisi nilai kemiripan antar restoran, simetrik dengan restoran sebagai indeks dan kolom.
-items: Tipe data pd.DataFrame. Dataframe yang berisi nama restoran dan fitur lainnya yang digunakan untuk mendefinisikan kemiripan.
-k: Tipe data integer (int). Jumlah rekomendasi yang akan diberikan.
-
-Langkah-langkah dalam fungsi:
-1. Mengambil indeks restoran dengan kemiripan tertinggi:
-- Menggunakan argpartition untuk melakukan partisi secara tidak langsung sepanjang sumbu yang diberikan. Dataframe diubah menjadi numpy array untuk mempermudah proses ini.
-- range(-1, -k, -1) digunakan untuk mengambil k nilai terbesar dari kemiripan.
-
-2. Mengambil nama restoran dengan kemiripan tertinggi:
-- Menggunakan indeks yang diperoleh dari langkah sebelumnya untuk mendapatkan nama restoran dengan kemiripan tertinggi.
-- index[-1:-(k+2):-1] digunakan untuk mengurutkan dan mengambil k nilai terbesar.
-
-3. Menghapus nama restoran yang dicari dari daftar rekomendasi:
-- Menggunakan drop untuk memastikan restoran yang dicari tidak muncul dalam daftar rekomendasi.
-
-4. Menggabungkan hasil dengan dataframe items:
-- Menggunakan merge untuk menggabungkan hasil rekomendasi dengan dataframe items agar informasi tambahan tentang restoran juga disertakan.
-- Menggunakan head(k) untuk memastikan hanya k rekomendasi yang diberikan.
-
-
-Pada akhirnya kita akan menjalankan fungsi tersebut. 
-Pertama kita akan mencoba melihat data. Sebagai contoh kita mengambil data dengan nama makanan chrismas cake dengan kode:
-
-food[food.Name.eq('christmas cake')]
-
-Dengan menggunakan argpartition, kita mengambil sejumlah nilai k tertinggi dari similarity data (dalam kasus ini: dataframe cosine_sim_df). Kemudian, kita mengambil data dari bobot (tingkat kesamaan) tertinggi ke terendah. Data ini dimasukkan ke dalam variabel closest. Berikutnya, kita perlu menghapus nama_resto yang yang dicari agar tidak muncul dalam daftar rekomendasi. Dalam kasus ini, nanti kita akan mencari resto yang mirip dengan christmas cake, sehingga kita perlu drop nama_makanan christmas cake agar tidak muncul dalam daftar rekomendasi yang diberikan nanti.
-hasilnya adalah:
-
-![image](https://github.com/user-attachments/assets/b26bb49b-5520-4abe-8b71-24a55b1df05f)
-
-Kedua kita akan meminta rekomendasi makanan yang mirip dengan chrismas cake dengan kode:
-
-food_recommendations('christmas cake')
-
-![image](https://github.com/user-attachments/assets/ca170395-82d6-4c84-b815-1c83a483a210)
-
-Hasilnya adalah makanan yang mirip dengan chrismas cake adalah: 
-1. chocolate kaju katli	
-2. eggless vanilla cake	
-3. sweet potato pie	
-4. eggless coffee cupcakes	
-5. plum cake	
-
-Semua rekomendasi tersebut adalah masuk dalam kategori dessert yang sama dengan yang kategori chrismas cake
-
-## 4.3. Collaborative Filtering
+## 4.6. Data preparation untuk Collaborative Filtering
 Collaborative filtering bergantung pada pendapat komunitas pengguna. Ia tidak memerlukan atribut untuk setiap itemnya seperti pada sistem berbasis konten. Collaborative filtering dibagi lagi menjadi dua kategori, yaitu: model based (metode berbasis model machine learning) dan memory based (metode berbasis memori).
 
 Untuk melakukan sistem rekomendasi dengan Collaborative Filtering, kita akan mempersiapkan  data rating. Langkah untuk melakukan collaborative filtering adalah
 1. Encode label
 2. validasi
-3. training data
-4. visualisasi metrik
-5. rekomendasi makanan
 
 ### 4.3.1. Encode label
 Pada tahap ini, Anda perlu melakukan persiapan data untuk menyandikan (encode) fitur ‘User_ID’ dan 'Food_ID' ke dalam indeks integer. Terapkan kode berikut.
@@ -448,7 +355,7 @@ Untuk memastikan data termaping dengan baik, maka langkah berikut perlu dilakuka
 
 Kode ini bertujuan untuk memverifikasi bahwa semua Food_ID dalam dataframe rating telah berhasil dipetakan ke angka unik tanpa ada yang terlewat.
 
-Penejlasan:
+Penjelasan:
 1. len(rating['Food_ID'].unique()): Menghitung jumlah Food_ID yang unik dalam dataframe rating.
 2. len(food_to_food_encoded): Menghitung jumlah entri dalam dictionary food_to_food_encoded.
 3. set(rating['Food_ID']) - set(food_to_food_encoded.keys()): Mengidentifikasi Food_ID yang tidak ada dalam dictionary food_to_food_encoded.
@@ -519,8 +426,120 @@ Kode ini bertujuan untuk memeriksa apakah ada nilai Food_ID dalam data latih (x_
 
 Kode ini membantu dalam memverifikasi integritas data latih dengan memastikan bahwa semua nilai Food_ID berada dalam rentang yang valid. Jika ada nilai Food_ID yang tidak valid, ini akan ditampilkan sehingga dapat diperbaiki sebelum melanjutkan ke tahap pelatihan model
 
+# 5. Modeling
 
-### 4.3.3. Training data
+## 5.1. Modeling Content-based filter
+
+Tahapan pembuatan model pada Content-based filter dimulai dengan:
+1. Pembuatan consine similarity
+2. Pembuatan rekomendasi makanan
+
+### 5.1.1. Cosine similarity
+
+Pada tahap sebelumnya, kita telah berhasil mengidentifikasi korelasi antara restoran dengan kategori masakannya. Sekarang, kita akan menghitung derajat kesamaan (similarity degree) antar restoran dengan teknik cosine similarity. Di sini, kita menggunakan fungsi cosine_similarity dari library sklearn.
+
+![image](https://github.com/user-attachments/assets/c8397199-c7a5-41ee-970c-58d2b6318538)
+
+Kode ini bertujuan untuk menghitung cosine similarity antara dokumen-dokumen yang diwakili dalam bentuk matriks TF-IDF (Term Frequency-Inverse Document Frequency). Cosine similarity adalah ukuran kesamaan antara dua vektor yang mengukur sudut kosinus di antara mereka. Berikut penjelasannya:
+
+1. cosine_similarity(tfidf_matrix): Fungsi ini menghitung cosine similarity antara semua pasangan dokumen dalam matriks TF-IDF yang diberikan. Matriks TF-IDF adalah representasi numerik dari dokumen-dokumen yang menunjukkan seberapa penting suatu kata dalam dokumen tertentu relatif terhadap seluruh kumpulan dokumen.
+2. cosine_sim: Variabel ini menyimpan hasil dari perhitungan cosine similarity. Hasilnya adalah matriks dua dimensi di mana setiap elemen (i, j) menunjukkan kesamaan antara dokumen i dan dokumen j.
+
+Selanjutnya kode berikut ini bertujuan untuk membuat dataframe dari variabel cosine_sim dengan baris dan kolom yang diberi nama sesuai dengan nama restoran. Ini memungkinkan kita untuk melihat kesamaan antara setiap pasangan restoran berdasarkan matriks cosine similarity yang telah dihitung sebelumnya.
+
+![image](https://github.com/user-attachments/assets/65a68e59-852c-4181-8fee-fcac0f7ab149)
+
+erikut penjelasannya:
+1. pd.DataFrame(cosine_sim, index=food['Name'], columns=food['Name']): Membuat dataframe dari matriks cosine similarity (cosine_sim). Baris dan kolom dataframe ini diberi label menggunakan nama restoran yang diambil dari kolom 'Name' dalam dataframe food.
+2. print('Shape:', cosine_sim_df.shape): Mencetak bentuk (dimensi) dari dataframe cosine_sim_df.
+3. cosine_sim_df.sample(5, axis=1).sample(10, axis=0): Menampilkan sampel acak dari 5 kolom dan 10 baris dari dataframe cosine_sim_df. Ini membantu untuk melihat sebagian kecil dari matriks kesamaan secara acak.
+
+### 5.1.2. Mendapatkan rekomendasi top-N 
+Sebelumnya, kita telah memiliki data similarity (kesamaan) antar makanan. selanjutnya adalah menhasilkan sejumlah makanan yang akan direkomendasikan kepada pengguna. Di sini, kita membuat fungsi resto_recommendations dengan beberapa parameter sebagai berikut:
+
+Nama_makanan : Nama restoran (index kemiripan dataframe).
+
+Similarity_data : Dataframe mengenai similarity yang telah kita definisikan sebelumnya.
+
+Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah ‘Name’ dan ‘C_Type’.
+
+k : Banyak rekomendasi yang ingin diberikan.
+
+Sebelum mulai menulis kodenya, ingatlah kembali definisi sistem rekomendasi yang menyatakan bahwa keluaran sistem ini adalah berupa top-N recommendation. Oleh karena itu, kita akan memberikan sejumlah rekomendasi restoran pada pengguna yang diatur dalam parameter k.
+
+Untuk mendapatkan rekomendasi berbasis konten, maka perlu membuat fungsi terlebih dahulu, berikut adalah:
+
+def food_recommendations(nama_makanan, similarity_data=cosine_sim_df, items=food[['Name', 'C_Type']], k=5):
+
+index = similarity_data.loc[:,nama_makanan].to_numpy().argpartition(
+        range(-1, -k, -1))
+
+ closest = similarity_data.columns[index[-1:-(k+2):-1]]
+
+closest = closest.drop(nama_makanan, errors='ignore')
+
+return pd.DataFrame(closest).merge(items).head(k)
+
+Keterangan:
+Fungsi ini bertujuan untuk memberikan rekomendasi restoran berdasarkan kemiripan dengan restoran yang diberikan.
+
+Parameter:
+nama_makanan: Tipe data string (str). Nama restoran yang akan dijadikan acuan untuk mencari kemiripan.
+
+similarity_data: Tipe data pd.DataFrame. Dataframe yang berisi nilai kemiripan antar restoran, simetrik dengan restoran sebagai indeks dan kolom.
+items: Tipe data pd.DataFrame. Dataframe yang berisi nama restoran dan fitur lainnya yang digunakan untuk mendefinisikan kemiripan.
+k: Tipe data integer (int). Jumlah rekomendasi yang akan diberikan.
+
+Langkah-langkah dalam fungsi:
+1. Mengambil indeks restoran dengan kemiripan tertinggi:
+- Menggunakan argpartition untuk melakukan partisi secara tidak langsung sepanjang sumbu yang diberikan. Dataframe diubah menjadi numpy array untuk mempermudah proses ini.
+- range(-1, -k, -1) digunakan untuk mengambil k nilai terbesar dari kemiripan.
+
+2. Mengambil nama restoran dengan kemiripan tertinggi:
+- Menggunakan indeks yang diperoleh dari langkah sebelumnya untuk mendapatkan nama restoran dengan kemiripan tertinggi.
+- index[-1:-(k+2):-1] digunakan untuk mengurutkan dan mengambil k nilai terbesar.
+
+3. Menghapus nama restoran yang dicari dari daftar rekomendasi:
+- Menggunakan drop untuk memastikan restoran yang dicari tidak muncul dalam daftar rekomendasi.
+
+4. Menggabungkan hasil dengan dataframe items:
+- Menggunakan merge untuk menggabungkan hasil rekomendasi dengan dataframe items agar informasi tambahan tentang restoran juga disertakan.
+- Menggunakan head(k) untuk memastikan hanya k rekomendasi yang diberikan.
+
+
+Pada akhirnya kita akan menjalankan fungsi tersebut. 
+Pertama kita akan mencoba melihat data. Sebagai contoh kita mengambil data dengan nama makanan chrismas cake dengan kode:
+
+food[food.Name.eq('christmas cake')]
+
+Dengan menggunakan argpartition, kita mengambil sejumlah nilai k tertinggi dari similarity data (dalam kasus ini: dataframe cosine_sim_df). Kemudian, kita mengambil data dari bobot (tingkat kesamaan) tertinggi ke terendah. Data ini dimasukkan ke dalam variabel closest. Berikutnya, kita perlu menghapus nama_resto yang yang dicari agar tidak muncul dalam daftar rekomendasi. Dalam kasus ini, nanti kita akan mencari resto yang mirip dengan christmas cake, sehingga kita perlu drop nama_makanan christmas cake agar tidak muncul dalam daftar rekomendasi yang diberikan nanti.
+hasilnya adalah:
+
+![image](https://github.com/user-attachments/assets/b26bb49b-5520-4abe-8b71-24a55b1df05f)
+
+Kedua kita akan meminta rekomendasi makanan yang mirip dengan chrismas cake dengan kode:
+
+food_recommendations('christmas cake')
+
+![image](https://github.com/user-attachments/assets/ca170395-82d6-4c84-b815-1c83a483a210)
+
+Hasilnya adalah makanan yang mirip dengan chrismas cake adalah: 
+1. chocolate kaju katli	
+2. eggless vanilla cake	
+3. sweet potato pie	
+4. eggless coffee cupcakes	
+5. plum cake	
+
+Semua rekomendasi tersebut adalah masuk dalam kategori dessert yang sama dengan yang kategori chrismas cake
+
+### 5.2. Modeling Colaborative based filtering
+Pada tahapan modeling dengan Modeling Colaborative based filtering dimulai dengan:
+
+1. training data
+2. visualisasi metrik
+3. rekomendasi makanan
+
+### 5.2.1. Training data
 
 Pada tahap ini, model menghitung skor kecocokan antara pengguna dan makanan dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan resto. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan food. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan food. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid.
 
@@ -531,8 +550,6 @@ Pada bagian inim model yang sudah dibuat akan ditrain untuk melihat akurasinya
 Pertama kita perlu membuat fungsi terselebih dahulu denga kode berikut:
 
 ![image](https://github.com/user-attachments/assets/457ee661-96e0-4d85-87ca-0f91646a01d5)
-
-# 5. Modeling
 
 Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation.
 
@@ -578,7 +595,6 @@ Secara keseluruhan, berdasarkan gambar:
 
 Model terus memperbaiki nilai loss dan RMSE pada data pelatihan, namun val_loss dan val_root_mean_squared_error tampak stabil di sekitar 0.74. Perbedaan yang kecil antara RMSE pada data pelatihan dan validasi mengindikasikan model tidak overfitting.
 
-
 ## 5.1. Visualisasi matrik
 
 Berikut ini adalah kode untuk melihat hasil training dalam bentuk visualisasi.
@@ -612,8 +628,7 @@ Masalah Overfitting: Model menunjukkan overfitting karena perbedaan yang semakin
 1. Model terlalu kompleks.
 2. Tidak cukupnya data untuk melatih model.
 
-
-## 5.2 Rekomendasi makanan
+### 5.2.2. Rekomendasi makanan top-N
 
 Tahap rekomendasi ini dimulai dengan membentuk fungsi dari data Food dan rating yang telah disiapkan sebelumnya. Berikut adalah kodenya:
 
@@ -632,7 +647,6 @@ Kode ini membantu membuat data input untuk model sistem rekomendasi berbasis col
 Selanjutnya sistem akan menunjukkan  rekomendasi makanan terbaik dan makanan yang memiliki kemiripan dengan jenis makanan tersebut. Berikut ini kodenya:
 
 ![image](https://github.com/user-attachments/assets/54cd1d3d-2e22-4e9b-a23f-d2abaae46859)
-
 
 Hasilnya berikut ini
 
@@ -653,6 +667,7 @@ Saat sistem merekomendasikan makanan yang memiliki reting tinggi yaitu: almond p
 8. filter coffee : Beverage
 9. garlic and pinenut soup with burnt butter essence : French
 10. roasted spring chicken with root veggies : Healthy Food
+
 
 
 # 6. Evaluasi
